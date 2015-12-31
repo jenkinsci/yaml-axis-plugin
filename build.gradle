@@ -16,11 +16,11 @@ apply plugin: 'groovy'
 
 group = "org.jenkins-ci.plugins"
 version = "0.0.1-SNAPSHOT"    // Or whatever your version is.
-description = "A description of your plugin"
+description = "This plugin allows you to define a matrix build axis that is dynamically populated from a yaml file"
 
 jenkinsPlugin {
     coreVersion = '1.609'                                               // Version of Jenkins core this plugin depends on.
-    displayName = 'Hello World plugin built with Gradle'                // Human-readable name of plugin.
+    displayName = 'File Axis plugin'                // Human-readable name of plugin.
     url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage'   // URL for plugin on Jenkins wiki or elsewhere.
     gitHubUrl = 'https://github.com/jenkinsci/some-plugin'              // Plugin URL on GitHub. Optional.
     shortName = 'file-axis'                                           // Plugin ID, defaults to the project name without trailing '-plugin'.
@@ -45,4 +45,5 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar'
 }
