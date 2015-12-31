@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.fileaxis
+package org.jenkinsci.plugins.yamlaxis
 import hudson.Extension
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
@@ -8,9 +8,9 @@ import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
 
-class FileAxis extends Axis {
+class YamlAxis extends Axis {
     @DataBoundConstructor
-    FileAxis(String name, String valueString) {
+    YamlAxis(String name, String valueString) {
         super(name, valueString)
     }
 
@@ -33,7 +33,7 @@ class FileAxis extends Axis {
          */
         @Override
         public Axis newInstance(StaplerRequest req, JSONObject formData) {
-            new FileAxis(formData.getString("name"), formData.getString("valueString"))
+            new YamlAxis(formData.getString("name"), formData.getString("valueString"))
         }
 
         /**
@@ -42,12 +42,12 @@ class FileAxis extends Axis {
          */
         @Override
         public String getDisplayName() {
-            "File Axis"
+            "Yaml Axis"
         }
 
         public FormValidation doCheckValueString(@QueryParameter String value) {
             if(value == null || value == "") {
-                return FormValidation.error("Axis file can not be empty")
+                return FormValidation.error("Axis yaml file can not be empty")
             }
         }
     }
