@@ -11,6 +11,7 @@ buildscript {
 }
 
 apply plugin: 'org.jenkins-ci.jpi'
+apply plugin: 'groovy'
 
 
 group = "org.jenkins-ci.plugins"
@@ -36,4 +37,12 @@ jenkinsPlugin {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.10'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
 }
