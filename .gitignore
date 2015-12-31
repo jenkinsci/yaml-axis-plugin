@@ -11,3 +11,4 @@ gradle-app.setting
 # Created by .ignore support plugin (hsz.mobi)
 classes/
 .idea/
+.gradle/
