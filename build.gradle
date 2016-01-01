@@ -20,10 +20,10 @@ description = "This plugin allows you to define a matrix build axis that is dyna
 
 jenkinsPlugin {
     coreVersion = '1.609'                                               // Version of Jenkins core this plugin depends on.
-    displayName = 'File Axis plugin'                // Human-readable name of plugin.
+    displayName = 'Yaml Axis plugin'                                    // Human-readable name of plugin.
     url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage'   // URL for plugin on Jenkins wiki or elsewhere.
     gitHubUrl = 'https://github.com/jenkinsci/some-plugin'              // Plugin URL on GitHub. Optional.
-    shortName = 'yaml-axis'                                           // Plugin ID, defaults to the project name without trailing '-plugin'.
+    shortName = 'yaml-axis'                                             // Plugin ID, defaults to the project name without trailing '-plugin'.
 
     // The developers section is optional, and corresponds to the POM developers section.
     developers {
