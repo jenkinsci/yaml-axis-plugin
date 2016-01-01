@@ -44,9 +44,11 @@ repositories {
 }
 
 dependencies {
+    // NOTE: groovy version included in Jenkins is 1.8.9
+    runtime 'org.codehaus.groovy:groovy-all:1.8.9'
     compile 'org.yaml:snakeyaml:1.16'
 
-    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
 
     jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar'
 }
