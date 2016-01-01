@@ -1,18 +1,29 @@
 package org.jenkinsci.plugins.yamlaxis
-import groovy.transform.InheritConstructors
+
 import hudson.Extension
+import hudson.Util
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
 import hudson.matrix.MatrixBuild
-import hudson.model.OneOffExecutor
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
+import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
 
-@InheritConstructors
+import java.util.logging.Level
+import java.util.logging.Logger
+
 class YamlAxis extends Axis {
-    private transient List<String> computedValues = null
+    private static final Logger LOGGER = Logger.getLogger(YamlAxis.class.getName())
+
+    private List<String> computedValues = null
+
+    @DataBoundConstructor
+    public YamlAxis(String name, String valueString, List<String> computedValues) {
+        super(name, valueString)
+        this.computedValues = computedValues
+    }
 
     @Override
     List<String> getValues() {
@@ -20,17 +31,14 @@ class YamlAxis extends Axis {
             return computedValues
         }
 
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile(), currentDir: getCurrentWorkspace())
+        YamlLoader loader = new YamlLoader(yamlFile: yamlFile())
 
         try {
-            // TODO: debug
-            println("getValues")
             computedValues = loader.loadValues(name)
-            println("getValues=${computedValues}")
-            return computedValues
-        } catch (IOException){
-            println("getValues: IOException")
-            return Collections.emptyList()
+            computedValues
+        } catch (IOException e){
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile()}", e)
+            []
         }
     }
 
@@ -40,29 +48,16 @@ class YamlAxis extends Axis {
         YamlLoader loader = new YamlLoader(yamlFile: yamlFile(), currentDir: workspace)
 
         try {
-            // TODO: debug
-            println("rebuild")
             computedValues = loader.loadValues(name)
-            println("rebuild=${computedValues}")
-            return computedValues;
+            computedValues
         } catch (IOException e){
-            println("rebuild: IOException")
-            e.printStackTrace()
-            return Collections.emptyList();
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile()}", e)
+            []
         }
     }
 
     String yamlFile(){
         valueString
-    }
-
-    private String getCurrentWorkspace(){
-        try {
-            OneOffExecutor thr = (OneOffExecutor) Thread.currentThread();
-            return thr.getCurrentWorkspace().getRemote();
-        } catch (ClassCastException){
-            return "";
-        }
     }
 
     /**
@@ -80,7 +75,7 @@ class YamlAxis extends Axis {
         public Axis newInstance(StaplerRequest req, JSONObject formData) {
             String name = formData.getString("name")
             String yamlFile = formData.getString("valueString")
-            new YamlAxis(name, yamlFile)
+            new YamlAxis(name, yamlFile, null)
         }
 
         /**
@@ -93,7 +88,7 @@ class YamlAxis extends Axis {
         }
 
         public FormValidation doCheckValueString(@QueryParameter String value) {
-            if(value == null || value == "") {
+            if(Util.fixEmpty(value) == null) {
                 return FormValidation.error("Axis yaml file can not be empty")
             }
             FormValidation.ok()
