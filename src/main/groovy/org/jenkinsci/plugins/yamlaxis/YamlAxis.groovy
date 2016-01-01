@@ -1,23 +1,22 @@
 package org.jenkinsci.plugins.yamlaxis
+import groovy.transform.InheritConstructors
 import hudson.Extension
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
-import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
 
+@InheritConstructors
 class YamlAxis extends Axis {
-    @DataBoundConstructor
-    YamlAxis(String name, String valueString) {
-        super(name, valueString)
-    }
-
     @Override
     List<String> getValues() {
-        // TODO
-        ["value1", "value2"]
+        YamlLoader.loadValues(yamlFile(), name)
+    }
+
+    String yamlFile(){
+        valueString
     }
 
     /**
@@ -33,7 +32,9 @@ class YamlAxis extends Axis {
          */
         @Override
         public Axis newInstance(StaplerRequest req, JSONObject formData) {
-            new YamlAxis(formData.getString("name"), formData.getString("valueString"))
+            String name = formData.getString("name")
+            String yamlFile = formData.getString("valueString")
+            new YamlAxis(name, yamlFile)
         }
 
         /**
@@ -49,6 +50,7 @@ class YamlAxis extends Axis {
             if(value == null || value == "") {
                 return FormValidation.error("Axis yaml file can not be empty")
             }
+            FormValidation.ok()
         }
     }
 }
