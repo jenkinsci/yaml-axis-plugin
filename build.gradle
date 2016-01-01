@@ -45,5 +45,15 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'org.yaml:snakeyaml:1.16'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+
     jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar'
+}
+
+test {
+    testLogging {
+        showStandardStreams = true
+    }
 }
