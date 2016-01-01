@@ -12,7 +12,8 @@ import org.kohsuke.stapler.StaplerRequest
 class YamlAxis extends Axis {
     @Override
     List<String> getValues() {
-        YamlLoader.loadValues(yamlFile(), name)
+        YamlLoader loader = new YamlLoader(yamlFile: yamlFile())
+        loader.loadValues(name)
     }
 
     String yamlFile(){

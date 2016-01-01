@@ -4,8 +4,11 @@ class YamlLoaderTest extends spock.lang.Specification {
     private static final String YAML_FILE = "src/test/resources/matrix.yml"
 
     def "load"(){
+        setup:
+        def loader = new YamlLoader(YAML_FILE)
+
         expect:
-        YamlLoader.loadValues(YAML_FILE, key) == expected
+        loader.loadValues(key) == expected
 
         where:
         key            || expected
