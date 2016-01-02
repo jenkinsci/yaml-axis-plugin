@@ -3,7 +3,7 @@
   <f:entry title="Axis yaml file" field="valueString">
     <f:textbox default="" />
   </f:entry>
-  <f:entry title="Axis name" field="name">
+  <f:entry title="Axis name (Top key of yaml)" field="name">
     <f:textbox default="" />
   </f:entry>
 </j:jelly>
