@@ -44,7 +44,7 @@ class YamlAxis extends Axis {
 
     @Override
     public List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
-        String workspace = context.getBuild().getWorkspace().getRemote()
+        String workspace = context.getBuild().getModuleRoot().getRemote()
         YamlLoader loader = new YamlLoader(yamlFile: yamlFile, currentDir: workspace)
 
         try {
