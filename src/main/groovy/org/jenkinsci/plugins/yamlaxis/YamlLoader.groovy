@@ -9,7 +9,7 @@ class YamlLoader {
     String currentDir
 
     List<String> loadValues(String key){
-        if(yamlFile == null || yamlFile == "") {
+        if(Util.fixEmpty(yamlFile) == null) {
             return []
         }
 
