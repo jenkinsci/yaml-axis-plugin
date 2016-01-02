@@ -31,13 +31,13 @@ class YamlAxis extends Axis {
             return computedValues
         }
 
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile())
+        YamlLoader loader = new YamlLoader(yamlFile: yamlFile)
 
         try {
             computedValues = loader.loadValues(name)
             computedValues
         } catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile()}", e)
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}", e)
             []
         }
     }
@@ -45,18 +45,18 @@ class YamlAxis extends Axis {
     @Override
     public List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
         String workspace = context.getBuild().getWorkspace().getRemote()
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile(), currentDir: workspace)
+        YamlLoader loader = new YamlLoader(yamlFile: yamlFile, currentDir: workspace)
 
         try {
             computedValues = loader.loadValues(name)
             computedValues
         } catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile()}", e)
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}", e)
             []
         }
     }
 
-    String yamlFile(){
+    String getYamlFile(){
         valueString
     }
 
