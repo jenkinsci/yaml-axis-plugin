@@ -1,12 +1,13 @@
 package org.jenkinsci.plugins.yamlaxis
 import groovy.transform.TupleConstructor
+import hudson.FilePath
 import hudson.Util
 import org.yaml.snakeyaml.Yaml
 
 @TupleConstructor
 class YamlLoader {
     String yamlFile
-    String currentDir
+    FilePath workspace
 
     List<String> loadValues(String key){
         if(Util.fixEmpty(yamlFile) == null) {
@@ -14,7 +15,7 @@ class YamlLoader {
         }
 
         Yaml yaml = new Yaml()
-        InputStream input = new FileInputStream(createFile())
+        InputStream input = createFilePath().read()
 
         try{
             def content = yaml.load(input)
@@ -27,15 +28,11 @@ class YamlLoader {
         }
     }
 
-    private File createFile() {
-        if (!Util.isRelativePath(yamlFile)) {
-            return new File(yamlFile)
+    private FilePath createFilePath() {
+        if (!Util.isRelativePath(yamlFile) || workspace == null) {
+            return new FilePath(new File(yamlFile))
         }
 
-        if (Util.fixEmpty(currentDir) == null) {
-            new File(yamlFile)
-        } else {
-            new File(currentDir + File.separator + yamlFile)
-        }
+        new FilePath(workspace, yamlFile)
     }
 }

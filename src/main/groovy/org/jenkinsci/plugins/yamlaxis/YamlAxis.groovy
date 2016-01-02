@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.yamlaxis
 
 import hudson.Extension
+import hudson.FilePath
 import hudson.Util
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
@@ -44,8 +45,8 @@ class YamlAxis extends Axis {
 
     @Override
     public List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
-        String workspace = context.getBuild().getModuleRoot().getRemote()
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile, currentDir: workspace)
+        FilePath workspace = context.getBuild().getModuleRoot()
+        YamlLoader loader = new YamlLoader(yamlFile: yamlFile, workspace: workspace)
 
         try {
             computedValues = loader.loadValues(name)
