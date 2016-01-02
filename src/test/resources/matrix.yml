@@ -6,3 +6,6 @@ INT_VALUE:
   - 1
   - 2
   - 3
+BOOL_VALUE:
+  - true
+  - false

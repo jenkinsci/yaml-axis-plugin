@@ -16,6 +16,7 @@ class YamlLoaderTest extends spock.lang.Specification {
         yamlFile           | key            || expected
         RELATIVE_YAML_FILE | "STRING_VALUE" || ["a", "b", "c"]
         RELATIVE_YAML_FILE | "INT_VALUE"    || ["1", "2", "3"]
+        RELATIVE_YAML_FILE | "BOOL_VALUE"   || ["true", "false"]
         RELATIVE_YAML_FILE | "UNKNOWN"      || []
         ABSOLUTE_YAML_FILE | "STRING_VALUE" || ["a", "b", "c"]
     }
