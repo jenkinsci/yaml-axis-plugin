@@ -15,15 +15,15 @@ apply plugin: 'groovy'
 
 
 group = "org.jenkins-ci.plugins"
-version = "0.0.1-SNAPSHOT"    // Or whatever your version is.
-description = "This plugin allows you to define a matrix build axis that is dynamically populated from a yaml file"
+version = "0.0.1-SNAPSHOT"
+description = "Matrix project axis creation plugin using yaml file"
 
 jenkinsPlugin {
-    coreVersion = '1.609'                                               // Version of Jenkins core this plugin depends on.
-    displayName = 'Yaml Axis plugin'                                    // Human-readable name of plugin.
-    url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage'   // URL for plugin on Jenkins wiki or elsewhere.
-    gitHubUrl = 'https://github.com/jenkinsci/some-plugin'              // Plugin URL on GitHub. Optional.
-    shortName = 'yaml-axis'                                             // Plugin ID, defaults to the project name without trailing '-plugin'.
+    coreVersion = '1.609'
+    displayName = 'Yaml Axis plugin'
+    url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage' // TODO: fix after
+    gitHubUrl = 'https://github.com/jenkinsci/yaml-axis-plugin'
+    shortName = 'yaml-axis'
 
     // The developers section is optional, and corresponds to the POM developers section.
     developers {
