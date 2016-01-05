@@ -6,6 +6,7 @@ Matrix project axis creation plugin using yaml file
 example
 
 ```yaml
+# axis.yml
 RUBY_VERSION:
   - 2.1.8
   - 2.2.4
