@@ -15,13 +15,13 @@ apply plugin: 'groovy'
 
 
 group = "org.jenkins-ci.plugins"
-version = "0.0.1-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 description = "Matrix project axis creation plugin using yaml file"
 
 jenkinsPlugin {
     coreVersion = '1.609'
     displayName = 'Yaml Axis plugin'
-    url = 'http://wiki.jenkins-ci.org/display/JENKINS/SomePluginPage' // TODO: fix after
+    url = 'https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin'
     gitHubUrl = 'https://github.com/jenkinsci/yaml-axis-plugin'
     shortName = 'yaml-axis'
 

@@ -1,6 +1,11 @@
 # Jenkins Yaml Axis Plugin
 Matrix project axis creation plugin using yaml file
 
+[![Build Status](https://jenkins.ci.cloudbees.com/buildStatus/icon?job=plugins/yaml-axis-plugin)](https://jenkins.ci.cloudbees.com/job/plugins/job/yaml-axis-plugin/)
+
+* https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin
+* https://github.com/jenkinsci/yaml-axis-plugin
+
 ## Usage
 ### 1. Add yaml file to repository
 example
@@ -19,7 +24,7 @@ DATABASE:
 ```
 
 ### 2. Create Multi-configuration project
-![matrix](doc/new_job.png)
+![new_job](doc/new_job.png)
 
 ### 3. Configuration Matrix
 Choose **Yaml Axis**
