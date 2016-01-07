@@ -15,7 +15,7 @@ apply plugin: 'groovy'
 
 
 group = "org.jenkins-ci.plugins"
-version = "0.1.0-SNAPSHOT"
+version = "0.1.0"
 description = "Matrix project axis creation plugin using yaml file"
 
 jenkinsPlugin {
