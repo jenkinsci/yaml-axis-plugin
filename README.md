@@ -1,6 +1,7 @@
 # Jenkins Yaml Axis Plugin
 Matrix project axis creation plugin using yaml file
 
+[![Plugin Version](http://sebastian-badge.info/plugins/yaml-axis.svg)](https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin)
 [![Build Status](https://jenkins.ci.cloudbees.com/buildStatus/icon?job=plugins/yaml-axis-plugin)](https://jenkins.ci.cloudbees.com/job/plugins/job/yaml-axis-plugin/)
 
 * https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin
