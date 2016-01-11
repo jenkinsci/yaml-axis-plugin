@@ -32,6 +32,7 @@ class YamlAxis extends Axis {
             return computedValues
         }
 
+        // NOTE: Plugin can not get workspace location in this method
         YamlLoader loader = new YamlLoader(yamlFile: yamlFile)
 
         try {
