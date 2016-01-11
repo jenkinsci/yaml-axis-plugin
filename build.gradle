@@ -75,8 +75,7 @@ task tagRelease << {
 
 task checkVersion << {
     if(version.endsWith("-SNAPSHOT")){
-        logger.error "################### Remove -SNAPSHOT ! ###################"
-        throw "Remove -SNAPSHOT !"
+        throw new GradleException("Remove '-SNAPSHOT' in version!")
     }
 }
 
