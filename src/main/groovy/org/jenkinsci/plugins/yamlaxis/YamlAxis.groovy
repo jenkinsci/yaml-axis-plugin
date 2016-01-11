@@ -38,8 +38,8 @@ class YamlAxis extends Axis {
         try {
             computedValues = loader.loadValues(name)
             computedValues
-        } catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}", e)
+        } catch (IOException){
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
             []
         }
     }
@@ -52,8 +52,8 @@ class YamlAxis extends Axis {
         try {
             computedValues = loader.loadValues(name)
             computedValues
-        } catch (IOException e){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}", e)
+        } catch (IOException){
+            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
             []
         }
     }
