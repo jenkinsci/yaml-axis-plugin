@@ -21,7 +21,7 @@ class YamlAxis extends Axis {
     private List<String> computedValues = null
 
     @DataBoundConstructor
-    public YamlAxis(String name, String valueString, List<String> computedValues) {
+    YamlAxis(String name, String valueString, List<String> computedValues) {
         super(name, valueString)
         this.computedValues = computedValues
     }
@@ -45,7 +45,7 @@ class YamlAxis extends Axis {
     }
 
     @Override
-    public List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
+    List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
         FilePath workspace = context.getBuild().getModuleRoot()
         YamlLoader loader = new YamlLoader(yamlFile: yamlFile, workspace: workspace)
 
@@ -67,6 +67,8 @@ class YamlAxis extends Axis {
      */
     @Extension
     static class DescriptorImpl extends AxisDescriptor {
+        final String displayName = "Yaml Axis"
+
         /**
          * Overridden to create a new instance of our Axis extension from UI
          * values.
@@ -74,22 +76,13 @@ class YamlAxis extends Axis {
          * net.sf.json.JSONObject )
          */
         @Override
-        public Axis newInstance(StaplerRequest req, JSONObject formData) {
+        Axis newInstance(StaplerRequest req, JSONObject formData) {
             String name = formData.getString("name")
             String yamlFile = formData.getString("valueString")
             new YamlAxis(name, yamlFile, null)
         }
 
-        /**
-         * Overridden to provide our own display name.
-         * @see hudson.model.Descriptor#getDisplayName()
-         */
-        @Override
-        public String getDisplayName() {
-            "Yaml Axis"
-        }
-
-        public FormValidation doCheckValueString(@QueryParameter String value) {
+        FormValidation doCheckValueString(@QueryParameter String value) {
             if(Util.fixEmpty(value) == null) {
                 return FormValidation.error("Axis yaml file can not be empty")
             }
