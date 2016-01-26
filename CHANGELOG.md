@@ -1,5 +1,20 @@
 # Change Log
 
+## [Unreleased](https://github.com/jenkinsci/yaml-axis-plugin/tree/HEAD)
+
+[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.2...HEAD)
+
+**Closed issues:**
+
+-  java.lang.VerifyError [\#6](https://github.com/jenkinsci/yaml-axis-plugin/issues/6)
+
+## [0.1.2](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.1.2) (2016/01/26)
+[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.1...0.1.2)
+
+**Merged pull requests:**
+
+- Fix. UDP handling problem [\#8](https://github.com/jenkinsci/yaml-axis-plugin/pull/8) ([sue445](https://github.com/sue445))
+
 ## [0.1.1](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.1.1) (2016/01/24)
 [Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.0...0.1.1)
 
