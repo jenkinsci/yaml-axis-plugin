@@ -55,7 +55,7 @@ class YamlMatrixExecutionStrategy extends BaseMES {
         }
 
         try{
-            List<Map<String, String>> values = getYamlLoader(execution).loadValues(excludeKey)
+            List<Map<String, String>> values = getYamlLoader(execution).loadMaps(excludeKey)
             if(values == null){
                 log(execution, "[WARN] NotFound excludeKey ${excludeKey}")
                 return []

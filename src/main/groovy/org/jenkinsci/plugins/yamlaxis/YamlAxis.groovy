@@ -33,10 +33,10 @@ class YamlAxis extends Axis {
         }
 
         // NOTE: Plugin can not get workspace location in this method
-        OrigYamlLoader loader = new OrigYamlLoader(yamlFile: yamlFile)
+        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile)
 
         try {
-            computedValues = loader.loadValues(name)
+            computedValues = loader.loadStrings(name)
             computedValues
         } catch (IOException){
             LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
@@ -47,10 +47,10 @@ class YamlAxis extends Axis {
     @Override
     List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
         FilePath workspace = context.getBuild().getModuleRoot()
-        OrigYamlLoader loader = new OrigYamlLoader(yamlFile: yamlFile, workspace: workspace)
+        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile, workspace: workspace)
 
         try {
-            computedValues = loader.loadValues(name)
+            computedValues = loader.loadStrings(name)
             computedValues
         } catch (IOException){
             LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
