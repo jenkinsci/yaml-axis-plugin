@@ -4,7 +4,7 @@ import hudson.FilePath
 
 class OrigYamlLoaderSpec extends spock.lang.Specification {
     private static final String CURRENT_DIR = System.getProperty("user.dir")
-    private static final String RELATIVE_YAML_FILE = "src/test/resources/matrix.yml"
+    private static final String RELATIVE_YAML_FILE = "src/test/resources/axis.yml"
     private static final String ABSOLUTE_YAML_FILE = CURRENT_DIR + File.separator + RELATIVE_YAML_FILE
 
     def "load"(){

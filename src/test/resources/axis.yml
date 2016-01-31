@@ -1,3 +1,14 @@
+STRING_VALUE:
+  - a
+  - b
+  - c
+INT_VALUE:
+  - 1
+  - 2
+  - 3
+BOOL_VALUE:
+  - true
+  - false
 exclude:
   - a: 1
     b: 2
