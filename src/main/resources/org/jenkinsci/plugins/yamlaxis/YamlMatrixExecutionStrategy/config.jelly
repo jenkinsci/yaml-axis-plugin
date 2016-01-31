@@ -1,0 +1,28 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt" xmlns:p="/lib/hudson/project">
+  <script><![CDATA[
+    var YamlMatrixExecutionStrategy = {
+      // ref. https://issues.jenkins-ci.org/browse/JENKINS-15604
+      cmChange: function(editor, change){
+        editor.save();
+        $$('.validated').forEach(function (e) {e.onchange()})
+      }
+    }
+  ]]></script>
+
+  <f:radioBlock checked="${instance.yamlTypeFile}" inline="true" name="yamlType" title="Yaml File" value="file">
+    <f:entry title="yaml file" field="yamlFile">
+      <f:textbox default="" />
+    </f:entry>
+  </f:radioBlock>
+  <f:radioBlock checked="${instance.yamlTypeText}" inline="true" name="yamlType" title="Yaml Text" value="text">
+    <f:entry title="yaml text" field="yamlText">
+      <f:textarea default="" codemirror-mode="yaml" codemirror-config="mode: 'text/x-yaml', onChange: YamlMatrixExecutionStrategy.cmChange"
+                  checkUrl="'descriptorByName/YamlMatrixExecutionStrategy/checkYamlText?value='+escape(this.value)"/>
+    </f:entry>
+  </f:radioBlock>
+
+  <f:entry title="Exclude key (Top key of yaml)" field="excludeKey">
+    <f:textbox default="" />
+  </f:entry>
+</j:jelly>
