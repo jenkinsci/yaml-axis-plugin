@@ -5,7 +5,7 @@ import hudson.Util
 import org.yaml.snakeyaml.Yaml
 
 @TupleConstructor
-class YamlLoader {
+class OrigYamlLoader {
     String yamlFile
     FilePath workspace
 

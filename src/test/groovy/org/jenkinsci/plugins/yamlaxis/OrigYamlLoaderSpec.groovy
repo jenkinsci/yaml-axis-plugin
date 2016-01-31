@@ -2,7 +2,7 @@ package org.jenkinsci.plugins.yamlaxis
 
 import hudson.FilePath
 
-class YamlLoaderSpec extends spock.lang.Specification {
+class OrigYamlLoaderSpec extends spock.lang.Specification {
     private static final String CURRENT_DIR = System.getProperty("user.dir")
     private static final String RELATIVE_YAML_FILE = "src/test/resources/matrix.yml"
     private static final String ABSOLUTE_YAML_FILE = CURRENT_DIR + File.separator + RELATIVE_YAML_FILE
@@ -10,7 +10,7 @@ class YamlLoaderSpec extends spock.lang.Specification {
     def "load"(){
         setup:
         FilePath workspace = new FilePath(new File(CURRENT_DIR))
-        def loader = new YamlLoader(yamlFile: yamlFile, workspace: workspace)
+        def loader = new OrigYamlLoader(yamlFile: yamlFile, workspace: workspace)
 
         expect:
         loader.loadValues(key) == expected

@@ -33,7 +33,7 @@ class YamlAxis extends Axis {
         }
 
         // NOTE: Plugin can not get workspace location in this method
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile)
+        OrigYamlLoader loader = new OrigYamlLoader(yamlFile: yamlFile)
 
         try {
             computedValues = loader.loadValues(name)
@@ -47,7 +47,7 @@ class YamlAxis extends Axis {
     @Override
     List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
         FilePath workspace = context.getBuild().getModuleRoot()
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile, workspace: workspace)
+        OrigYamlLoader loader = new OrigYamlLoader(yamlFile: yamlFile, workspace: workspace)
 
         try {
             computedValues = loader.loadValues(name)
