@@ -18,28 +18,71 @@ RUBY_VERSION:
   - 2.2.4
   - 2.3.0
 
-DATABASE:
-  - mysql
-  - postgres
-  - oracle
+exclude:
+  - RUBY_VERSION: 2.1.8
+  - RUBY_VERSION: 2.3.0
+    DATABASE: oracle
 ```
 
 ### 2. Create Multi-configuration project
 ![new_job](doc/new_job.png)
 
-### 3. Configuration Matrix
+### 3. Configuration Axis
 Choose **Yaml Axis**
 
 ![Add axis](doc/add_axis.png)
 
 Input configurations
 
-![config](doc/config.png)
+![config](doc/axis_config.png)
 
 * **Axis yaml file** : Yaml file path (relative path from workspace or absolute path)
 * **Axis name** : Top key in yaml file
 
+You can combine **Yaml Axis** and other axes
+
+### 4. Configuration Execution Strategy
+#### Choose "Yaml matrix execution strategy" at Execution Strategy
+![strategy](doc/execution_strategy.png)
+
+If you don't want to exclusion, choose **Classic**
+
+#### Input settings
+##### Example 1 (Use yaml file)
+
+![yaml_file](doc/yaml_file.png)
+
+##### Example 2 (Use yaml text)
+![yaml_text](doc/yaml_text.png)
+
 ### 4. Build job
 Generate yaml based matrix and run job :muscle:
 
-![matrix](doc/matrix.png)
+![result](doc/result.png)
+
+## Detail
+### Excluding logic
+Excluding pattern may be specified with `List` of `Map` (e.g. `List<Map<String, String>>`)
+
+```yaml
+# axis.yml
+exclude:
+  - RUBY_VERSION: 2.1.8
+  - RUBY_VERSION: 2.3.0
+    DATABASE: oracle
+```
+
+When specified 2 axes
+
+![axis](doc/axis.png)
+
+This results in a 3x3 build matrix.
+
+![result](doc/result.png)
+
+* When specified `RUBY_VERSION` value `2.1.8`, 3 results are excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `mysql` is excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `postgres` is excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `oracle` is excluded
+* When specified `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle`, 1 result is excluded
+  * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle` is excluded
