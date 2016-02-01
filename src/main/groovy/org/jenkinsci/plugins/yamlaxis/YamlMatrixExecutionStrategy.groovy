@@ -37,7 +37,7 @@ class YamlMatrixExecutionStrategy extends BaseMES {
         List<Combination> excludeCombinations = loadExcludes(execution)
         List<Combination> combinations = MatrixUtils.reject(comb, excludeCombinations)
 
-        log(execution, "excludes=${excludeCombinations}")
+        BuildUtils.log(execution, "excludes=${excludeCombinations}")
         ["YamlMatrixExecutionStrategy": combinations]
     }
 
@@ -57,13 +57,13 @@ class YamlMatrixExecutionStrategy extends BaseMES {
         try{
             List<Map<String, String>> values = getYamlLoader(execution).loadMaps(excludeKey)
             if(values == null){
-                log(execution, "[WARN] NotFound excludeKey ${excludeKey}")
+                BuildUtils.log(execution, "[WARN] NotFound excludeKey ${excludeKey}")
                 return []
             }
             values.collect { new Combination(it) }
 
-        } catch (IOException) {
-            log(execution, "[WARN] Can not read yamlFile: ${yamlFile}")
+        } catch (IOException e) {
+            BuildUtils.log(execution, "[WARN] Can not read yamlFile: ${yamlFile}", e)
             []
         }
     }
@@ -78,10 +78,6 @@ class YamlMatrixExecutionStrategy extends BaseMES {
         default:
             throw new IllegalArgumentException("${yamlType} is unknown")
         }
-    }
-
-    private void log(MatrixBuild.MatrixBuildExecution execution, String message){
-        execution.getListener().getLogger().println(message)
     }
 
     @Extension

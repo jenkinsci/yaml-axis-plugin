@@ -52,8 +52,8 @@ class YamlAxis extends Axis {
         try {
             computedValues = loader.loadStrings(name)
             computedValues
-        } catch (IOException){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
+        } catch (IOException e){
+            BuildUtils.log(context, "[WARN] Can not read yamlFile: ${yamlFile}", e)
             []
         }
     }
