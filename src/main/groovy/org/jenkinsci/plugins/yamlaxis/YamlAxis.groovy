@@ -12,12 +12,7 @@ import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
 
-import java.util.logging.Level
-import java.util.logging.Logger
-
 class YamlAxis extends Axis {
-    private static final Logger LOGGER = Logger.getLogger(YamlAxis.class.getName())
-
     private List<String> computedValues = null
 
     @DataBoundConstructor
@@ -39,7 +34,6 @@ class YamlAxis extends Axis {
             computedValues = loader.loadStrings(name)
             computedValues
         } catch (IOException){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
             []
         }
     }
