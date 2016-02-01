@@ -2,13 +2,13 @@ package org.jenkinsci.plugins.yamlaxis
 
 import hudson.Extension
 import hudson.FilePath
-import hudson.Util
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
 import hudson.matrix.MatrixBuild
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
 import org.jenkinsci.plugins.yamlaxis.util.BuildUtils
+import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
@@ -78,10 +78,7 @@ class YamlAxis extends Axis {
         }
 
         FormValidation doCheckValueString(@QueryParameter String value) {
-            if(Util.fixEmpty(value) == null) {
-                return FormValidation.error("Axis yaml file can not be empty")
-            }
-            FormValidation.ok()
+            DescriptorUtils.checkFieldNotEmpty(value, "valueStrng")
         }
     }
 }

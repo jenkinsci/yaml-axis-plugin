@@ -7,8 +7,8 @@ import hudson.matrix.MatrixBuild
 import hudson.matrix.MatrixExecutionStrategyDescriptor
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
-import org.apache.commons.lang.StringUtils
 import org.jenkinsci.plugins.yamlaxis.util.BuildUtils
+import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils
 import org.jenkinsci.plugins.yamlaxis.util.MatrixUtils
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
@@ -96,19 +96,11 @@ class YamlMatrixExecutionStrategy extends BaseMES {
         }
 
         FormValidation doCheckYamlFile(@QueryParameter String value) {
-            checkFieldNotEmpty(value, "yamlFile")
+            DescriptorUtils.checkFieldNotEmpty(value, "yamlFile")
         }
 
         FormValidation doCheckYamlText(@QueryParameter String value) {
-            checkFieldNotEmpty(value, "yamlText")
-        }
-
-        private FormValidation checkFieldNotEmpty(String value, String field) {
-            if(StringUtils.isBlank(value)) {
-                return FormValidation.error("${field} can not be empty")
-            }
-
-            FormValidation.ok();
+            DescriptorUtils.checkFieldNotEmpty(value, "yamlText")
         }
     }
 }
