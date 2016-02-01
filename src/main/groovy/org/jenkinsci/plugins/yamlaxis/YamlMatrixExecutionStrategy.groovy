@@ -8,6 +8,8 @@ import hudson.matrix.MatrixExecutionStrategyDescriptor
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
 import org.apache.commons.lang.StringUtils
+import org.jenkinsci.plugins.yamlaxis.util.BuildUtils
+import org.jenkinsci.plugins.yamlaxis.util.MatrixUtils
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest

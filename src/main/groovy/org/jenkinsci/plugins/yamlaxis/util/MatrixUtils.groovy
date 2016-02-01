@@ -1,6 +1,9 @@
-package org.jenkinsci.plugins.yamlaxis
+package org.jenkinsci.plugins.yamlaxis.util
 
-class MatrixUtils {
+final class MatrixUtils {
+    private MatrixUtils(){
+    }
+
     // Whether parent map contains all entry of child map
     static <T extends Map> boolean contains(T parent, T child) {
         child.every { parent.containsKey(it.key) && parent[it.key] == it.value }

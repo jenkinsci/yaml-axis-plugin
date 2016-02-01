@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.yamlaxis
+package org.jenkinsci.plugins.yamlaxis.util
 
 class MatrixUtilsSpec extends spock.lang.Specification {
     def "contain"(){

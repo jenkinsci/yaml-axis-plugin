@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.yamlaxis
+package org.jenkinsci.plugins.yamlaxis.util
 
 import hudson.matrix.MatrixBuild
 import org.apache.commons.lang.exception.ExceptionUtils
