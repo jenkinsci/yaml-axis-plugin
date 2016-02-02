@@ -1,12 +1,16 @@
 # Change Log
 
-## [Unreleased](https://github.com/jenkinsci/yaml-axis-plugin/tree/HEAD)
-
-[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.2...HEAD)
+## [0.2.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.0) (2016/02/02)
+[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.2...0.2.0)
 
 **Closed issues:**
 
+- merge Yaml Matrix Execution Strategy Plugin to axis plugin [\#9](https://github.com/jenkinsci/yaml-axis-plugin/issues/9)
 -  java.lang.VerifyError [\#6](https://github.com/jenkinsci/yaml-axis-plugin/issues/6)
+
+**Merged pull requests:**
+
+- Add YamlMatrixExecutionStrategy [\#10](https://github.com/jenkinsci/yaml-axis-plugin/pull/10) ([sue445](https://github.com/sue445))
 
 ## [0.1.2](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.1.2) (2016/01/26)
 [Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.1...0.1.2)
