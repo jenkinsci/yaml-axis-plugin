@@ -60,6 +60,9 @@ Generate yaml based matrix and run job :muscle:
 
 ![result](doc/result.png)
 
+* blue is executed job
+* gray is excluded(skipped) job
+
 ## Detail
 ### Excluding logic
 Excluding pattern may be specified with `List` of `Map` (e.g. `List<Map<String, String>>`)
