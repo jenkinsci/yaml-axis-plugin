@@ -9,3 +9,7 @@ INT_VALUE:
 BOOL_VALUE:
   - true
   - false
+exclude:
+  - a: 1
+    b: 2
+  - c: 3

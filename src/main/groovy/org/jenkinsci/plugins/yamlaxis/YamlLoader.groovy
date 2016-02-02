@@ -1,38 +1,30 @@
 package org.jenkinsci.plugins.yamlaxis
-import groovy.transform.TupleConstructor
-import hudson.FilePath
-import hudson.Util
-import org.yaml.snakeyaml.Yaml
 
-@TupleConstructor
-class YamlLoader {
-    String yamlFile
-    FilePath workspace
-
-    List<String> loadValues(String key){
-        if(Util.fixEmpty(yamlFile) == null) {
+abstract class YamlLoader {
+    List<String> loadStrings(String key){
+        Map content = getContent()
+        def values = content.get(key)
+        if(values == null){
             return []
         }
+        values.collect { it.toString() }
+    }
 
-        Yaml yaml = new Yaml()
-        InputStream input = createFilePath().read()
-
-        try{
-            def content = yaml.load(input)
-            def values = content.get(key)
-            values.collect { it.toString() }
-
-        } finally {
-            // NOTE: can not use withCloseable on groovy 1.8.9 (Jenkins included version)
-            input.close()
+    /**
+     *
+     * @param key
+     * @return if key is not found, return null
+     */
+    List<Map<String, String>> loadMaps(String key){
+        Map content = getContent()
+        def values = content.get(key)
+        if(values == null){
+            return null
+        }
+        values.collect {
+            it.collectEntries { k, v -> [k, v.toString()] }
         }
     }
 
-    private FilePath createFilePath() {
-        if (!Util.isRelativePath(yamlFile) || workspace == null) {
-            return new FilePath(new File(yamlFile))
-        }
-
-        new FilePath(workspace, yamlFile)
-    }
+    abstract Map getContent()
 }

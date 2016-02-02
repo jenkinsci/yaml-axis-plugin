@@ -2,22 +2,18 @@ package org.jenkinsci.plugins.yamlaxis
 
 import hudson.Extension
 import hudson.FilePath
-import hudson.Util
 import hudson.matrix.Axis
 import hudson.matrix.AxisDescriptor
 import hudson.matrix.MatrixBuild
 import hudson.util.FormValidation
 import net.sf.json.JSONObject
+import org.jenkinsci.plugins.yamlaxis.util.BuildUtils
+import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.StaplerRequest
 
-import java.util.logging.Level
-import java.util.logging.Logger
-
 class YamlAxis extends Axis {
-    private static final Logger LOGGER = Logger.getLogger(YamlAxis.class.getName())
-
     private List<String> computedValues = null
 
     @DataBoundConstructor
@@ -33,13 +29,12 @@ class YamlAxis extends Axis {
         }
 
         // NOTE: Plugin can not get workspace location in this method
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile)
+        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile)
 
         try {
-            computedValues = loader.loadValues(name)
+            computedValues = loader.loadStrings(name)
             computedValues
         } catch (IOException){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
             []
         }
     }
@@ -47,13 +42,13 @@ class YamlAxis extends Axis {
     @Override
     List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
         FilePath workspace = context.getBuild().getModuleRoot()
-        YamlLoader loader = new YamlLoader(yamlFile: yamlFile, workspace: workspace)
+        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile, workspace: workspace)
 
         try {
-            computedValues = loader.loadValues(name)
+            computedValues = loader.loadStrings(name)
             computedValues
-        } catch (IOException){
-            LOGGER.log(Level.SEVERE, "Can not read yamlFile: ${yamlFile}")
+        } catch (IOException e){
+            BuildUtils.log(context, "[WARN] Can not read yamlFile: ${yamlFile}", e)
             []
         }
     }
@@ -83,10 +78,7 @@ class YamlAxis extends Axis {
         }
 
         FormValidation doCheckValueString(@QueryParameter String value) {
-            if(Util.fixEmpty(value) == null) {
-                return FormValidation.error("Axis yaml file can not be empty")
-            }
-            FormValidation.ok()
+            DescriptorUtils.checkFieldNotEmpty(value, "valueStrng")
         }
     }
 }
