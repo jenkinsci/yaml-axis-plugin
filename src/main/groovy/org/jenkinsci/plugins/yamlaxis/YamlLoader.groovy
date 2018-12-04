@@ -7,7 +7,12 @@ abstract class YamlLoader {
         if(values == null){
             return []
         }
-        values.collect { it.toString() }
+
+        if(values instanceof Map) {
+            values.keySet()
+        } else {
+            values.collect { it.toString() }
+        }
     }
 
     /**
