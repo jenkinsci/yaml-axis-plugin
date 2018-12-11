@@ -20,7 +20,7 @@ version = "0.2.1-SNAPSHOT"
 description = "Matrix project axis creation and exclusion plugin using yaml file"
 
 jenkinsPlugin {
-    coreVersion = '1.609'
+    coreVersion = '2.0'
     displayName = 'Yaml Axis plugin'
     url = 'https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin'
     gitHubUrl = 'https://github.com/jenkinsci/yaml-axis-plugin'
