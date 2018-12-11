@@ -20,7 +20,7 @@ version = "0.2.1-SNAPSHOT"
 description = "Matrix project axis creation and exclusion plugin using yaml file"
 
 jenkinsPlugin {
-    coreVersion = '1.609'
+    coreVersion = '2.0'
     displayName = 'Yaml Axis plugin'
     url = 'https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin'
     gitHubUrl = 'https://github.com/jenkinsci/yaml-axis-plugin'
@@ -46,10 +46,10 @@ repositories {
 
 dependencies {
     // NOTE: groovy version included in Jenkins is 1.8.9
-    runtime 'org.codehaus.groovy:groovy-all:1.8.9'
+    runtime 'org.codehaus.groovy:groovy-all:2.4.2'
     compile 'org.yaml:snakeyaml:1.16'
 
-    testCompile 'org.spockframework:spock-core:0.7-groovy-1.8'
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 
     jenkinsPlugins 'org.jenkins-ci.plugins:matrix-project:1.6@jar'
 }

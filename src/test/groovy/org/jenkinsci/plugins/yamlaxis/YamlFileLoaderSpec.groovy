@@ -22,6 +22,7 @@ class YamlFileLoaderSpec extends spock.lang.Specification {
         RELATIVE_YAML_FILE | "BOOL_VALUE"   || ["true", "false"]
         RELATIVE_YAML_FILE | "UNKNOWN"      || []
         ABSOLUTE_YAML_FILE | "STRING_VALUE" || ["a", "b", "c"]
+        RELATIVE_YAML_FILE | "MAP_VALUE"    || ["a", "b", "c"]
     }
 
     def "loadMaps"(){

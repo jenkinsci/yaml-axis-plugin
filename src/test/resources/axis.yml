@@ -13,3 +13,7 @@ exclude:
   - a: 1
     b: 2
   - c: 3
+MAP_VALUE:
+  a: 1
+  b: 2
+  c: 3
