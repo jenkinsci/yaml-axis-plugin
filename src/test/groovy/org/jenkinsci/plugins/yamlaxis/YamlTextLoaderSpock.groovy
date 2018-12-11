@@ -17,6 +17,10 @@ INT_VALUE:
 BOOL_VALUE:
   - true
   - false
+MAP_VALUE:
+  a: 1
+  b: 2
+  c: 3
 """
 
         def loader = new YamlTextLoader(yamlText: yamlText)
@@ -31,6 +35,7 @@ BOOL_VALUE:
         "BOOL_VALUE"   || ["true", "false"]
         "UNKNOWN"      || []
         "STRING_VALUE" || ["a", "b", "c"]
+        "MAP_VALUE"    || ["a", "b", "c"]
     }
 
     def "loadValues"(){
