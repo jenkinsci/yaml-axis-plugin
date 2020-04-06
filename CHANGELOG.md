@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.1](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.1) (2020/04/07)
+[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.2.0...0.2.1)
+
+- [SECURITY-1825] Resolved remote code execution vulnerability [\#17](https://github.com/jenkinsci/yaml-axis-plugin/pull/17)
+
 ## [0.2.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.0) (2016/02/02)
 [Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.1.2...0.2.0)
 
