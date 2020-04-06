@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.yamlaxis
 import groovy.transform.TupleConstructor
 import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.constructor.SafeConstructor
 
 @TupleConstructor
 class YamlTextLoader extends YamlLoader {
@@ -10,7 +11,7 @@ class YamlTextLoader extends YamlLoader {
 
     @Override
     Map getContent() {
-        Yaml yaml = new Yaml()
+        Yaml yaml = new Yaml(new SafeConstructor())
         yaml.load(yamlText)
     }
 }

@@ -3,6 +3,7 @@ import groovy.transform.TupleConstructor
 import hudson.FilePath
 import hudson.Util
 import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.constructor.SafeConstructor
 
 @TupleConstructor
 class YamlFileLoader extends YamlLoader {
@@ -17,7 +18,7 @@ class YamlFileLoader extends YamlLoader {
             return null
         }
 
-        Yaml yaml = new Yaml()
+        Yaml yaml = new Yaml(new SafeConstructor())
         InputStream input = createFilePath().read()
 
         try{
