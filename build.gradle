@@ -1,19 +1,19 @@
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url 'http://repo.jenkins-ci.org/releases/'
-        }
-    }
-    dependencies {
-        classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.12.2'
-        classpath 'org.ajoberstar:gradle-git:1.3.2'
-    }
+   repositories {
+       jcenter()
+       maven {
+           url 'https://repo.jenkins-ci.org/releases/'
+       }
+   }
+   dependencies {
+       classpath 'org.jenkins-ci.tools:gradle-jpi-plugin:0.38.0'
+       classpath 'org.ajoberstar:gradle-git:1.3.2'
+   }
 }
 
-apply plugin: 'org.jenkins-ci.jpi'
-apply plugin: 'groovy'
-
+plugins {
+    id 'org.jenkins-ci.jpi' version '0.38.0'
+}
 
 group = "org.jenkins-ci.plugins"
 version = "0.2.1"
@@ -36,8 +36,8 @@ jenkinsPlugin {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+wrapper {
+    gradleVersion = '6.3'
 }
 
 repositories {
@@ -59,24 +59,3 @@ test {
         showStandardStreams = true
     }
 }
-
-import org.ajoberstar.grgit.*
-
-ext.repo = Grgit.open()
-
-task tagRelease << {
-    repo.tag.add {
-        name = version
-        message = "Release of ${version}"
-    }
-
-    repo.push(tags: true)
-}
-
-task checkVersion << {
-    if(version.endsWith("-SNAPSHOT")){
-        throw new GradleException("Remove '-SNAPSHOT' in version!")
-    }
-}
-
-task release(dependsOn: ["checkVersion", "publish", "tagRelease"])
