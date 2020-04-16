@@ -14,7 +14,7 @@
 
 **Merged pull requests:**
 
-- \[SECURITY-1825\] Resolved remote code execution vulnerability [\#17](https://github.com/jenkinsci/yaml-axis-plugin/pull/17) ([sue445](https://github.com/sue445))
+- \[SECURITY-1825\] \[CVE-2020-2179\] Resolved remote code execution vulnerability [\#17](https://github.com/jenkinsci/yaml-axis-plugin/pull/17) ([sue445](https://github.com/sue445))
 - Revived the CI [\#16](https://github.com/jenkinsci/yaml-axis-plugin/pull/16) ([sue445](https://github.com/sue445))
 
 ## [0.2.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.0) (2016-02-02)
