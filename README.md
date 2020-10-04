@@ -1,13 +1,10 @@
 # Jenkins Yaml Axis Plugin
 Matrix project axis creation and exclusion plugin using yaml file
 
-[![Plugin Version](http://sebastian-badge.info/plugins/yaml-axis.svg)](https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin)
+[![Plugin Version](https://img.shields.io/jenkins/plugin/v/yaml-axis.svg)](https://github.com/jenkinsci/yaml-axis-plugin/blob/master/README.md)
 [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/yaml-axis-plugin/master)](https://ci.jenkins.io/job/Plugins/yaml-axis-plugin/master)
 
-* https://wiki.jenkins-ci.org/display/JENKINS/Yaml+Axis+Plugin
-* https://github.com/jenkinsci/yaml-axis-plugin
-
-## Usage
+# Usage
 ### 1. Add yaml file to repository
 example
 
