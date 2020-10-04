@@ -4,7 +4,7 @@ Matrix project axis creation and exclusion plugin using yaml file
 [![Plugin Version](https://img.shields.io/jenkins/plugin/v/yaml-axis.svg)](https://github.com/jenkinsci/yaml-axis-plugin/blob/master/README.md)
 [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/yaml-axis-plugin/master)](https://ci.jenkins.io/job/Plugins/yaml-axis-plugin/master)
 
-# Usage
+## Usage
 ### 1. Add yaml file to repository
 example
 
