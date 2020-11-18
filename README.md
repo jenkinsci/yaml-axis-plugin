@@ -62,8 +62,8 @@ Generate yaml based matrix and run job :muscle:
 
 ## Detail
 ### Excluding logic
-Excluding pattern may be specified with `List` of `Map` (e.g. `List<Map<String, String>>`)
-
+Excluding pattern may be specified with `List` of `Map` (e.g. `List<Map<String, [String or List]>>`)
+Elements in the `Map` may be a List to exclude multiple items for one key
 ```yaml
 # axis.yml
 exclude:
@@ -71,7 +71,6 @@ exclude:
   - RUBY_VERSION: 2.3.0
     DATABASE: oracle
 ```
-
 When specified 2 axes
 
 ![axis](doc/axis.png)
@@ -86,3 +85,39 @@ This results in a 3x3 build matrix.
   * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `oracle` is excluded
 * When specified `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle`, 1 result is excluded
   * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle` is excluded
+
+#### Another example
+```yaml
+# axis2.yml
+exclude:
+  - RUBY_VERSION: 2.1.8
+  - RUBY_VERSION: 2.3.0
+    DATABASE: 
+      - oracle
+      - mysql
+```
+* When specified `RUBY_VERSION` value `2.1.8`, 3 results are excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `mysql` is excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `postgres` is excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `oracle` is excluded
+* When specified `RUBY_VERSION` value `2.3.0`, 2 results are excluded
+  * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle` is excluded
+  * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `mysql` is excluded
+
+#### Final example
+Using multiple lists will exclude the cartesian product of those lists.
+```yaml
+# axis3.yml
+exclude:
+  - RUBY_VERSION: 
+      - 2.1.8
+      - 2.3.0
+    DATABASE: 
+      - oracle
+      - mysql
+```
+* 4 results are excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `mysql` is excluded
+  * `RUBY_VERSION` value `2.1.8` and `DATABASE` value `oracle` is excluded
+  * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `oracle` is excluded
+  * `RUBY_VERSION` value `2.3.0` and `DATABASE` value `mysql` is excluded

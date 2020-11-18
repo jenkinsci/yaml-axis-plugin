@@ -30,7 +30,7 @@ class YamlMatrixExecutionStrategySpec extends Specification {
     def "run"() {
         setup:
         def matrixProject = configure()
-        List<Combination> excludeCombinations = excludes.collect { new Combination(it) }
+        List<Combination> excludeCombinations = YamlMatrixExecutionStrategy.collectExcludeCombinations(excludes)
         matrixProject.executionStrategy = new YamlMatrixExecutionStrategy(excludeCombinations)
         def build = matrixProject.scheduleBuild2(0).get()
 
@@ -40,9 +40,16 @@ class YamlMatrixExecutionStrategySpec extends Specification {
         build.runs.size() == runsCount
 
         where:
-        excludes                   || runsCount
-        []                         || 9
-        [[axis1: "c", axis2: "z"]] || 8
-        [[axis1: "c"]]             || 6
+        excludes                                 || runsCount
+        []                                       || 9
+        [[axis1: "c", axis2: "z"]]               || 8
+        [[axis1: "c", axis2: ["z"]]]             || 8
+        [[axis1: ["c"], axis2: "z"]]             || 8
+        [[axis1: ["c"], axis2: ["z"]]]           || 8
+        [[axis1: "c"]]                           || 6
+        [[axis1: ["b", "c"]]]                    || 3
+        [[axis1: "b"], [axis1: "c"]]             || 3
+        [[axis1: "b", axis2: ["x", "y"]]]        || 7
+        [[axis1: ["a", "b"], axis2: ["x", "y"]]] || 5
     }
 }

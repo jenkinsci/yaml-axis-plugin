@@ -62,12 +62,51 @@ class YamlMatrixExecutionStrategy extends BaseMES {
                 BuildUtils.log(execution, "[WARN] NotFound excludeKey ${excludeKey}")
                 return []
             }
-            values.collect { new Combination(it) }
+            collectExcludeCombinations(values)
 
         } catch (IOException e) {
             BuildUtils.log(execution, "[WARN] Can not read yamlFile: ${yamlFile}", e)
             []
         }
+    }
+
+    public static List<Combination> collectExcludeCombinations(List<Map<String, ?>> excludes) {
+        List<Map<String, String>> result = []
+        for (value in excludes) {
+            List<Map<String, String>> combos = []
+            boolean isList = false
+            for (Map.Entry<String, ?> entry in value) {
+                if (entry.value instanceof List) {
+                    isList = true
+                    List<Map<String, String>> newCombos = []
+                    for (def v in entry.value) {
+                        if (combos) {
+                            for (def c in combos) {
+                                Map<String, String> clone = new HashMap<>(c)
+                                clone.put(entry.key, v)
+                                newCombos.add(clone)
+                            }
+                        } else {
+                            newCombos.add([(entry.key): v])
+                        }
+                    }
+                    combos = newCombos
+                }
+            }
+            if (isList) {
+                for (Map.Entry<String, ?> entry in value) {
+                    if (entry.value instanceof String) {
+                        for (def c in combos) {
+                            c.put(entry.key, entry.value)
+                        }
+                    }
+                }
+            } else {
+                combos.add(value)
+            }
+            result.addAll(combos)
+        }
+        result.collect { new Combination(it) }
     }
 
     private YamlLoader getYamlLoader(MatrixBuild.MatrixBuildExecution execution){

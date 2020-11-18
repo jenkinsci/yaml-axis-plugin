@@ -15,14 +15,21 @@ abstract class YamlLoader {
      * @param key
      * @return if key is not found, return null
      */
-    List<Map<String, String>> loadMaps(String key){
+    List<Map<String, ?>> loadMaps(String key){
         Map content = getContent()
         def values = content.get(key)
         if(values == null){
             return null
         }
         values.collect {
-            it.collectEntries { k, v -> [k, v.toString()] }
+            it.collectEntries { k, v ->
+                if(v instanceof List){
+                    [k, v.collect { it.toString() }]
+                }else{
+                    [k, v.toString()]
+                }
+             }
+
         }
     }
 
