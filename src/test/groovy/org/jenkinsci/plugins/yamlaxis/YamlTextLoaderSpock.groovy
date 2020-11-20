@@ -52,4 +52,26 @@ exclude:
         "exclude"   || [[a: "1", b: "2"], [c: "3"]]
         "not_found" || null
     }
+
+    def "loadValuesList"(){
+        setup:
+        String yamlText = """
+exclude:
+  - a: 1
+    b:
+      - 2
+      - 3
+  - c: 4
+"""
+
+        def loader = new YamlTextLoader(yamlText: yamlText)
+
+        expect:
+        loader.loadMaps(key) == expected
+
+        where:
+        key         || expected
+        "exclude"   || [[a: "1", b: ["2", "3"]], [c: "4"]]
+        "not_found" || null
+    }
 }
