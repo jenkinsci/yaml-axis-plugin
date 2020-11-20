@@ -63,6 +63,7 @@ Generate yaml based matrix and run job :muscle:
 ## Detail
 ### Excluding logic
 Excluding pattern may be specified with `List` of `Map` (e.g. `List<Map<String, [String or List]>>`)
+
 Elements in the `Map` may be a List to exclude multiple items for one key
 ```yaml
 # axis.yml
