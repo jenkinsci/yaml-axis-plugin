@@ -1,5 +1,15 @@
 # Changelog
 
+## [yaml-axis-0.3.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/yaml-axis-0.3.0) (2020-11-21)
+
+[Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.2.2...yaml-axis-0.3.0)
+
+**Merged pull requests:**
+
+- Migrate from gradle to pom [\#21](https://github.com/jenkinsci/yaml-axis-plugin/pull/21) ([sue445](https://github.com/sue445))
+- Allow for lists as values in excludes mappings [\#20](https://github.com/jenkinsci/yaml-axis-plugin/pull/20) ([raydouglass](https://github.com/raydouglass))
+- \[WEBSITE-757\] Request image with HTTPS [\#19](https://github.com/jenkinsci/yaml-axis-plugin/pull/19) ([MarkEWaite](https://github.com/MarkEWaite))
+
 ## [0.2.2](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.2) (2020-04-10)
 
 [Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.2.1...0.2.2)
@@ -14,7 +24,7 @@
 
 **Merged pull requests:**
 
-- \[SECURITY-1825\] \[CVE-2020-2179\] Resolved remote code execution vulnerability [\#17](https://github.com/jenkinsci/yaml-axis-plugin/pull/17) ([sue445](https://github.com/sue445))
+- \[SECURITY-1825\]\[CVE-2020-2179\] Resolved remote code execution vulnerability [\#17](https://github.com/jenkinsci/yaml-axis-plugin/pull/17) ([sue445](https://github.com/sue445))
 - Revived the CI [\#16](https://github.com/jenkinsci/yaml-axis-plugin/pull/16) ([sue445](https://github.com/sue445))
 
 ## [0.2.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/0.2.0) (2016-02-02)
