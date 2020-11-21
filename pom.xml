@@ -171,6 +171,25 @@
                     </includes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <xmlOutput>false</xmlOutput>
+                    <findbugsXmlOutput>false</findbugsXmlOutput>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
