@@ -1,0 +1,9 @@
+<FindBugsFilter>
+    <Match>
+        <Source name="~.*\.groovy" />
+        <Or>
+            <Bug pattern="SE_NO_SERIALVERSIONID" />
+            <Bug pattern="LI_LAZY_INIT_STATIC" />
+        </Or>
+    </Match>
+</FindBugsFilter>

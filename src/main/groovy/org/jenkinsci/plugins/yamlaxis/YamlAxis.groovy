@@ -81,4 +81,20 @@ class YamlAxis extends Axis {
             DescriptorUtils.checkFieldNotEmpty(value, "valueStrng")
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true
+        if (!(o instanceof YamlAxis)) return false
+
+        YamlAxis yamlAxis = (YamlAxis) o
+        if (computedValues != null ? !computedValues.equals(yamlAxis.computedValues) : yamlAxis.computedValues != null)
+            return false
+
+        true
+    }
+
+    @Override public int hashCode() {
+        return computedValues ? computedValues.hashCode() : 0;
+    }
 }
