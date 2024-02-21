@@ -5,15 +5,15 @@ import hudson.matrix.Combination
 import hudson.matrix.MatrixProject
 import hudson.matrix.TextAxis
 import org.junit.Rule
-import org.jvnet.hudson.test.GroovyJenkinsRule
+import org.jvnet.hudson.test.JenkinsRule
 import spock.lang.Specification
 
 class YamlMatrixExecutionStrategySpec extends Specification {
     @Rule
-    GroovyJenkinsRule rule = new GroovyJenkinsRule()
+    JenkinsRule rule = new JenkinsRule()
 
     MatrixProject configure() {
-        def matrixProject = rule.createMatrixProject()
+        def matrixProject = rule.createProject(MatrixProject.class);
 
         def axis = new TextAxis('axis1', ['a', 'b', 'c'])
         def axis2 = new TextAxis('axis2', ['x', 'y', 'z'])
