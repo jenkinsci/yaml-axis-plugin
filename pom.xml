@@ -9,12 +9,12 @@
     <artifactId>yaml-axis</artifactId>
     <name>Yaml Axis plugin</name>
     <description>Matrix project axis creation and exclusion plugin using yaml file</description>
-    <version>${revision}${changelist}</version>
+    <version>${revision}.${changelist}</version>
     <packaging>hpi</packaging>
     <url>https://github.com/jenkinsci/yaml-axis-plugin</url>
     <properties>
-        <revision>0.3.1</revision>
-        <changelist>-SNAPSHOT</changelist>
+        <revision>0</revision>
+        <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.446</jenkins.version>
     </properties>
 
