@@ -15,7 +15,7 @@
     <properties>
         <revision>0.3.1</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.361</jenkins.version>
+        <jenkins.version>2.446</jenkins.version>
     </properties>
 
     <scm>
