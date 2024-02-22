@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.yamlaxis
 import groovy.transform.TupleConstructor
 import hudson.FilePath
 import hudson.Util
+import org.yaml.snakeyaml.LoaderOptions
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.constructor.SafeConstructor
 
@@ -18,7 +19,7 @@ class YamlFileLoader extends YamlLoader {
             return null
         }
 
-        Yaml yaml = new Yaml(new SafeConstructor())
+        Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()))
         InputStream input = createFilePath().read()
 
         try{
