@@ -19,7 +19,7 @@ BOOL_VALUE:
   - false
 """
 
-        def loader = new YamlTextLoader(yamlText: yamlText)
+        def loader = new YamlTextLoader(yamlText)
 
         expect:
         loader.loadStrings(key) == expected
@@ -42,7 +42,7 @@ exclude:
   - c: 3
 """
 
-        def loader = new YamlTextLoader(yamlText: yamlText)
+        def loader = new YamlTextLoader(yamlText)
 
         expect:
         loader.loadMaps(key) == expected
@@ -64,7 +64,7 @@ exclude:
   - c: 4
 """
 
-        def loader = new YamlTextLoader(yamlText: yamlText)
+        def loader = new YamlTextLoader(yamlText)
 
         expect:
         loader.loadMaps(key) == expected

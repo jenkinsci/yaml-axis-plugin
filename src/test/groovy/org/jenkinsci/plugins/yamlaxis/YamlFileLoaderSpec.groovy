@@ -10,7 +10,7 @@ class YamlFileLoaderSpec extends spock.lang.Specification {
     def "loadStrings"(){
         setup:
         FilePath workspace = new FilePath(new File(CURRENT_DIR))
-        def loader = new YamlFileLoader(yamlFile: yamlFile, workspace: workspace)
+        def loader = new YamlFileLoader(yamlFile, workspace)
 
         expect:
         loader.loadStrings(key) == expected
@@ -27,7 +27,7 @@ class YamlFileLoaderSpec extends spock.lang.Specification {
     def "loadMaps"(){
         setup:
         FilePath workspace = new FilePath(new File(CURRENT_DIR))
-        def loader = new YamlFileLoader(yamlFile: yamlFile, workspace: workspace)
+        def loader = new YamlFileLoader(yamlFile, workspace)
 
         expect:
         loader.loadMaps(key) == expected

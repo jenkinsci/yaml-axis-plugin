@@ -1,18 +1,22 @@
-package org.jenkinsci.plugins.yamlaxis
-import groovy.transform.TupleConstructor
-import org.yaml.snakeyaml.LoaderOptions
-import org.yaml.snakeyaml.Yaml
-import org.yaml.snakeyaml.constructor.SafeConstructor
+package org.jenkinsci.plugins.yamlaxis;
 
-@TupleConstructor
-class YamlTextLoader extends YamlLoader {
-    static final String RADIO_VALUE = "text"
+import org.yaml.snakeyaml.LoaderOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 
-    String yamlText
+import java.util.Map;
+
+public class YamlTextLoader extends YamlLoader {
+    static final String RADIO_VALUE = "text";
+    private String yamlText;
+
+    public YamlTextLoader(String yamlText) {
+        this.yamlText = yamlText;
+    }
 
     @Override
-    Map getContent() {
-        Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()))
-        yaml.load(yamlText)
+    public Map getContent() {
+        Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
+        return (Map) yaml.load(yamlText);
     }
 }

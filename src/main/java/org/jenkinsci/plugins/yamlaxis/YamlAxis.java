@@ -1,100 +1,100 @@
-package org.jenkinsci.plugins.yamlaxis
+package org.jenkinsci.plugins.yamlaxis;
 
-import hudson.Extension
-import hudson.FilePath
-import hudson.matrix.Axis
-import hudson.matrix.AxisDescriptor
-import hudson.matrix.MatrixBuild
-import hudson.util.FormValidation
-import net.sf.json.JSONObject
-import org.jenkinsci.plugins.yamlaxis.util.BuildUtils
-import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils
-import org.kohsuke.stapler.DataBoundConstructor
-import org.kohsuke.stapler.QueryParameter
-import org.kohsuke.stapler.StaplerRequest
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.matrix.Axis;
+import hudson.matrix.AxisDescriptor;
+import hudson.matrix.MatrixBuild;
+import hudson.util.FormValidation;
+import net.sf.json.JSONObject;
+import org.jenkinsci.plugins.yamlaxis.util.BuildUtils;
+import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.QueryParameter;
+import org.kohsuke.stapler.StaplerRequest;
 
-class YamlAxis extends Axis {
-    private List<String> computedValues = null
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Logger;
+
+public class YamlAxis extends Axis {
+    private List<String> computedValues = null;
 
     @DataBoundConstructor
-    YamlAxis(String name, String valueString, List<String> computedValues) {
-        super(name, valueString)
-        this.computedValues = computedValues
+    public YamlAxis(String name, String valueString, List<String> computedValues) {
+        super(name, valueString);
+        this.computedValues = computedValues;
     }
 
     @Override
-    List<String> getValues() {
-        if(computedValues != null){
-            return computedValues
+    public List<String> getValues() {
+        if (computedValues != null) {
+            return computedValues;
         }
-
-        // NOTE: Plugin can not get workspace location in this method
-        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile)
-
+        // NOTE: Plugin cannot get workspace location in this method
+        YamlLoader loader = new YamlFileLoader(getYamlFile(), null);
         try {
-            computedValues = loader.loadStrings(name)
-            computedValues
-        } catch (IOException){
-            []
+            computedValues = loader.loadStrings(name);
+            return computedValues;
+        } catch (Exception e) {
+            return List.of();
         }
     }
 
     @Override
-    List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
-        FilePath workspace = context.getBuild().getModuleRoot()
-        YamlLoader loader = new YamlFileLoader(yamlFile: yamlFile, workspace: workspace)
-
+    public List<String> rebuild(MatrixBuild.MatrixBuildExecution context) {
+        FilePath workspace = context.getBuild().getModuleRoot();
+        YamlLoader loader = new YamlFileLoader(getYamlFile(), workspace);
         try {
-            computedValues = loader.loadStrings(name)
-            computedValues
-        } catch (IOException e){
-            BuildUtils.log(context, "[WARN] Can not read yamlFile: ${yamlFile}", e)
-            []
+            computedValues = loader.loadStrings(name);
+            return computedValues;
+        } catch (Exception e) {
+            BuildUtils.log(context, "[WARN] Cannot read yamlFile: " + getYamlFile(), e);
+            return List.of();
         }
     }
 
-    String getYamlFile(){
-        valueString
+    public String getYamlFile() {
+        return getValueString();
     }
 
     /**
      * Descriptor for this plugin.
      */
     @Extension
-    static class DescriptorImpl extends AxisDescriptor {
-        final String displayName = "Yaml Axis"
+    public static class DescriptorImpl extends AxisDescriptor {
+        @Override
+        public String getDisplayName() {
+            return "Yaml Axis";
+        }
 
         /**
          * Overridden to create a new instance of our Axis extension from UI
          * values.
-         * @see hudson.model.Descriptor#newInstance(org.kohsuke.stapler.StaplerRequest,
-         * net.sf.json.JSONObject )
          */
         @Override
-        Axis newInstance(StaplerRequest req, JSONObject formData) {
-            String name = formData.getString("name")
-            String yamlFile = formData.getString("valueString")
-            new YamlAxis(name, yamlFile, null)
+        public Axis newInstance(StaplerRequest req, JSONObject formData) {
+            String name = formData.getString("name");
+            String yamlFile = formData.getString("valueString");
+            return new YamlAxis(name, yamlFile, null);
         }
 
-        FormValidation doCheckValueString(@QueryParameter String value) {
-            DescriptorUtils.checkFieldNotEmpty(value, "valueStrng")
+        public FormValidation doCheckValueString(@QueryParameter String value) {
+            return DescriptorUtils.checkFieldNotEmpty(value, "valueString");
         }
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true
-        if (!(o instanceof YamlAxis)) return false
-
-        YamlAxis yamlAxis = (YamlAxis) o
-        if (computedValues != null ? !computedValues.equals(yamlAxis.computedValues) : yamlAxis.computedValues != null)
-            return false
-
-        true
+        if (this == o) return true;
+        if (!(o instanceof YamlAxis)) return false;
+        YamlAxis yamlAxis = (YamlAxis) o;
+        return computedValues != null ? computedValues.equals(yamlAxis.computedValues) : yamlAxis.computedValues == null;
     }
 
-    @Override public int hashCode() {
-        return computedValues ? computedValues.hashCode() : 0;
+    @Override
+    public int hashCode() {
+        return computedValues != null ? computedValues.hashCode() : 0;
     }
 }
