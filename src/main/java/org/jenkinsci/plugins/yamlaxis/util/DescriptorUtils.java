@@ -5,13 +5,12 @@ import org.apache.commons.lang.StringUtils;
 
 public final class DescriptorUtils {
 
-    private DescriptorUtils() {
-    }
+  private DescriptorUtils() {}
 
-    public static FormValidation checkFieldNotEmpty(String value, String field) {
-        if (StringUtils.isBlank(value)) {
-            return FormValidation.error(field + " can not be empty");
-        }
-        return FormValidation.ok();
+  public static FormValidation checkFieldNotEmpty(String value, String field) {
+    if (StringUtils.isBlank(value)) {
+      return FormValidation.error(field + " can not be empty");
     }
+    return FormValidation.ok();
+  }
 }

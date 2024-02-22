@@ -6,6 +6,10 @@ import hudson.matrix.Combination;
 import hudson.matrix.MatrixBuild;
 import hudson.matrix.MatrixExecutionStrategyDescriptor;
 import hudson.util.FormValidation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import net.sf.json.JSONObject;
 import org.jenkinsci.plugins.yamlaxis.util.BuildUtils;
 import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils;
@@ -14,145 +18,146 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class YamlMatrixExecutionStrategy extends BaseMES {
-    private String yamlType = YamlFileLoader.RADIO_VALUE;
-    private String yamlFile;
-    private String yamlText;
-    private String excludeKey;
-    private volatile List<Combination> excludes = null;
+  private String yamlType = YamlFileLoader.RADIO_VALUE;
+  private String yamlFile;
+  private String yamlText;
+  private String excludeKey;
+  private volatile List<Combination> excludes = null;
 
-    @DataBoundConstructor
-    public YamlMatrixExecutionStrategy(String yamlType, String yamlText, String yamlFile, String excludeKey) {
-        this.yamlType = yamlType;
-        this.yamlText = yamlText;
-        this.yamlFile = yamlFile;
-        this.excludeKey = excludeKey;
+  @DataBoundConstructor
+  public YamlMatrixExecutionStrategy(
+      String yamlType, String yamlText, String yamlFile, String excludeKey) {
+    this.yamlType = yamlType;
+    this.yamlText = yamlText;
+    this.yamlFile = yamlFile;
+    this.excludeKey = excludeKey;
+  }
+
+  public YamlMatrixExecutionStrategy(List<Combination> excludes) {
+    this.excludes = excludes;
+  }
+
+  @Override
+  public Map<String, List<Combination>> decideOrder(
+      MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
+    List<Combination> excludeCombinations = loadExcludes(execution);
+    List<Combination> combinations = MatrixUtils.reject(comb, excludeCombinations);
+    BuildUtils.log(execution, "excludes=" + excludeCombinations);
+    return new HashMap<String, List<Combination>>() {
+      {
+        put("YamlMatrixExecutionStrategy", combinations);
+      }
+    };
+  }
+
+  public boolean isYamlTypeFile() {
+    return yamlType.equals(YamlFileLoader.RADIO_VALUE);
+  }
+
+  public boolean isYamlTypeText() {
+    return yamlType.equals(YamlTextLoader.RADIO_VALUE);
+  }
+
+  private List<Combination> loadExcludes(MatrixBuild.MatrixBuildExecution execution) {
+    if (excludes != null) {
+      return excludes;
     }
+    try {
+      List<Map<String, ?>> values = getYamlLoader(execution).loadMaps(excludeKey);
+      if (values == null) {
+        BuildUtils.log(execution, "[WARN] NotFound excludeKey " + excludeKey);
+        return new ArrayList<>();
+      }
+      return collectExcludeCombinations(values);
+    } catch (Exception e) {
+      BuildUtils.log(execution, "[WARN] Can not read yamlFile: " + yamlFile, e);
+      return new ArrayList<>();
+    }
+  }
 
-    public YamlMatrixExecutionStrategy(List<Combination> excludes) {
-        this.excludes = excludes;
+  public static List<Combination> collectExcludeCombinations(List<Map<String, ?>> excludes) {
+    List<Map<String, String>> result = new ArrayList<>();
+    for (Map<String, ?> value : excludes) {
+      List<Map<String, String>> combos = new ArrayList<>();
+      boolean isList = false;
+      for (Map.Entry<String, ?> entry : value.entrySet()) {
+        if (entry.getValue() instanceof List) {
+          isList = true;
+          List<Map<String, String>> newCombos = new ArrayList<>();
+          for (Object v : (List) entry.getValue()) {
+            if (!combos.isEmpty()) {
+              for (Map<String, String> c : combos) {
+                Map<String, String> clone = new HashMap<>(c);
+                clone.put(entry.getKey(), (String) v);
+                newCombos.add(clone);
+              }
+            } else {
+              newCombos.add(
+                  new HashMap<String, String>() {
+                    {
+                      put(entry.getKey(), (String) v);
+                    }
+                  });
+            }
+          }
+          combos = newCombos;
+        }
+      }
+      if (isList) {
+        for (Map.Entry<String, ?> entry : value.entrySet()) {
+          if (entry.getValue() instanceof String) {
+            for (Map<String, String> c : combos) {
+              c.put(entry.getKey(), (String) entry.getValue());
+            }
+          }
+        }
+      } else {
+        combos.add((Map<String, String>) value);
+      }
+      result.addAll(combos);
+    }
+    List<Combination> combinations = new ArrayList<>();
+    for (Map<String, String> map : result) {
+      combinations.add(new Combination(map));
+    }
+    return combinations;
+  }
+
+  private YamlLoader getYamlLoader(MatrixBuild.MatrixBuildExecution execution) {
+    switch (yamlType) {
+      case YamlFileLoader.RADIO_VALUE:
+        FilePath workspace = execution.getBuild().getModuleRoot();
+        return new YamlFileLoader(yamlFile, workspace);
+      case YamlTextLoader.RADIO_VALUE:
+        return new YamlTextLoader(yamlText);
+      default:
+        throw new IllegalArgumentException(yamlType + " is unknown");
+    }
+  }
+
+  @Extension
+  public static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
+    @Override
+    public String getDisplayName() {
+      return "Yaml matrix execution strategy";
     }
 
     @Override
-    public Map<String, List<Combination>> decideOrder(MatrixBuild.MatrixBuildExecution execution, List<Combination> comb) {
-        List<Combination> excludeCombinations = loadExcludes(execution);
-        List<Combination> combinations = MatrixUtils.reject(comb, excludeCombinations);
-        BuildUtils.log(execution, "excludes=" + excludeCombinations);
-        return new HashMap<String, List<Combination>>() {{
-            put("YamlMatrixExecutionStrategy", combinations);
-        }};
+    public YamlMatrixExecutionStrategy newInstance(StaplerRequest req, JSONObject formData) {
+      String yamlType = formData.getString("yamlType");
+      String yamlFile = formData.getString("yamlFile");
+      String yamlText = formData.getString("yamlText");
+      String excludeKey = formData.getString("excludeKey");
+      return new YamlMatrixExecutionStrategy(yamlType, yamlText, yamlFile, excludeKey);
     }
 
-    public boolean isYamlTypeFile() {
-        return yamlType.equals(YamlFileLoader.RADIO_VALUE);
+    public FormValidation doCheckYamlFile(@QueryParameter String value) {
+      return DescriptorUtils.checkFieldNotEmpty(value, "yamlFile");
     }
 
-    public boolean isYamlTypeText() {
-        return yamlType.equals(YamlTextLoader.RADIO_VALUE);
+    public FormValidation doCheckYamlText(@QueryParameter String value) {
+      return DescriptorUtils.checkFieldNotEmpty(value, "yamlText");
     }
-
-    private List<Combination> loadExcludes(MatrixBuild.MatrixBuildExecution execution) {
-        if (excludes != null) {
-            return excludes;
-        }
-        try {
-            List<Map<String, ?>> values = getYamlLoader(execution).loadMaps(excludeKey);
-            if (values == null) {
-                BuildUtils.log(execution, "[WARN] NotFound excludeKey " + excludeKey);
-                return new ArrayList<>();
-            }
-            return collectExcludeCombinations(values);
-        } catch (Exception e) {
-            BuildUtils.log(execution, "[WARN] Can not read yamlFile: " + yamlFile, e);
-            return new ArrayList<>();
-        }
-    }
-
-    public static List<Combination> collectExcludeCombinations(List<Map<String, ?>> excludes) {
-        List<Map<String, String>> result = new ArrayList<>();
-        for (Map<String, ?> value : excludes) {
-            List<Map<String, String>> combos = new ArrayList<>();
-            boolean isList = false;
-            for (Map.Entry<String, ?> entry : value.entrySet()) {
-                if (entry.getValue() instanceof List) {
-                    isList = true;
-                    List<Map<String, String>> newCombos = new ArrayList<>();
-                    for (Object v : (List) entry.getValue()) {
-                        if (!combos.isEmpty()) {
-                            for (Map<String, String> c : combos) {
-                                Map<String, String> clone = new HashMap<>(c);
-                                clone.put(entry.getKey(), (String) v);
-                                newCombos.add(clone);
-                            }
-                        } else {
-                            newCombos.add(new HashMap<String, String>() {{
-                                put(entry.getKey(), (String) v);
-                            }});
-                        }
-                    }
-                    combos = newCombos;
-                }
-            }
-            if (isList) {
-                for (Map.Entry<String, ?> entry : value.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        for (Map<String, String> c : combos) {
-                            c.put(entry.getKey(), (String) entry.getValue());
-                        }
-                    }
-                }
-            } else {
-                combos.add((Map<String, String>) value);
-            }
-            result.addAll(combos);
-        }
-        List<Combination> combinations = new ArrayList<>();
-        for (Map<String, String> map : result) {
-            combinations.add(new Combination(map));
-        }
-        return combinations;
-    }
-
-    private YamlLoader getYamlLoader(MatrixBuild.MatrixBuildExecution execution) {
-        switch (yamlType) {
-            case YamlFileLoader.RADIO_VALUE:
-                FilePath workspace = execution.getBuild().getModuleRoot();
-                return new YamlFileLoader(yamlFile, workspace);
-            case YamlTextLoader.RADIO_VALUE:
-                return new YamlTextLoader(yamlText);
-            default:
-                throw new IllegalArgumentException(yamlType + " is unknown");
-        }
-    }
-
-    @Extension
-    public static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
-        @Override
-        public String getDisplayName() {
-            return "Yaml matrix execution strategy";
-        }
-
-        @Override
-        public YamlMatrixExecutionStrategy newInstance(StaplerRequest req, JSONObject formData) {
-            String yamlType = formData.getString("yamlType");
-            String yamlFile = formData.getString("yamlFile");
-            String yamlText = formData.getString("yamlText");
-            String excludeKey = formData.getString("excludeKey");
-            return new YamlMatrixExecutionStrategy(yamlType, yamlText, yamlFile, excludeKey);
-        }
-
-        public FormValidation doCheckYamlFile(@QueryParameter String value) {
-            return DescriptorUtils.checkFieldNotEmpty(value, "yamlFile");
-        }
-
-        public FormValidation doCheckYamlText(@QueryParameter String value) {
-            return DescriptorUtils.checkFieldNotEmpty(value, "yamlText");
-        }
-    }
+  }
 }
