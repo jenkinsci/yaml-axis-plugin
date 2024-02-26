@@ -13,7 +13,6 @@
     <packaging>hpi</packaging>
     <url>https://github.com/jenkinsci/yaml-axis-plugin</url>
     <properties>
-        <revision>0</revision>
         <changelist>999999-SNAPSHOT</changelist>
         <jenkins.version>2.446</jenkins.version>
     </properties>
