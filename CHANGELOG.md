@@ -1,5 +1,7 @@
-# Changelog
+# Changelog (v169+)
+see. https://github.com/jenkinsci/yaml-axis-plugin/releases
 
+# Changelog (v0.x)
 ## [yaml-axis-0.3.0](https://github.com/jenkinsci/yaml-axis-plugin/tree/yaml-axis-0.3.0) (2020-11-21)
 
 [Full Changelog](https://github.com/jenkinsci/yaml-axis-plugin/compare/0.2.2...yaml-axis-0.3.0)
