@@ -13,7 +13,7 @@ updates:
       time: "05:00"
       timezone: "Asia/Tokyo"
     ignore:
-      - dependency-name: "org.jenkins-ci.main.jenkins-core"
+      - dependency-name: "org.jenkins-ci.main:jenkins-core"
     assignees:
       - "sue445"
 
