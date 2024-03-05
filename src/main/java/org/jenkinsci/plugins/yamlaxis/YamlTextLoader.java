@@ -14,8 +14,8 @@ public class YamlTextLoader extends YamlLoader {
   }
 
   @Override
-  public Map getContent() {
+  public Map<String, Object> getContent() {
     Yaml yaml = new Yaml(new SafeConstructor(new LoaderOptions()));
-    return (Map) yaml.load(yamlText);
+    return yaml.load(yamlText);
   }
 }
