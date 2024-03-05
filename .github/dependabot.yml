@@ -12,6 +12,8 @@ updates:
       day: "saturday"
       time: "05:00"
       timezone: "Asia/Tokyo"
+    ignore:
+      - dependency-name: "org.jenkins-ci.main.jenkins-core"
     exclude-patterns:
       - "jenkins-core"
     assignees:
