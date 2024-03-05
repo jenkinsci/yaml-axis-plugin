@@ -31,7 +31,7 @@ public class YamlAxis extends Axis {
     // NOTE: Plugin cannot get workspace location in this method
     YamlLoader loader = new YamlFileLoader(getYamlFile(), null);
     try {
-      computedValues = loader.loadStrings(name);
+      computedValues = loader.loadStrings(getName());
       return computedValues;
     } catch (Exception e) {
       return List.of();
@@ -43,7 +43,7 @@ public class YamlAxis extends Axis {
     FilePath workspace = context.getBuild().getModuleRoot();
     YamlLoader loader = new YamlFileLoader(getYamlFile(), workspace);
     try {
-      computedValues = loader.loadStrings(name);
+      computedValues = loader.loadStrings(getName());
       return computedValues;
     } catch (Exception e) {
       BuildUtils.log(context, "[WARN] Cannot read yamlFile: " + getYamlFile(), e);

@@ -20,7 +20,7 @@ public class YamlFileLoader extends YamlLoader {
   }
 
   @Override
-  public Map getContent() {
+  public Map<String, Object> getContent() {
     if (Util.fixEmpty(yamlFile) == null) {
       return null;
     }

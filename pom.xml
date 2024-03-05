@@ -115,6 +115,8 @@
                     <encoding>utf-8</encoding>
                     <source>11</source>
                     <target>11</target>
+                    <compilerArgument>-Xlint:deprecation</compilerArgument>
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
             <plugin>

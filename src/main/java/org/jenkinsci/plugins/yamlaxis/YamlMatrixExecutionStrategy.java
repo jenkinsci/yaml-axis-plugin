@@ -76,6 +76,7 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public static List<Combination> collectExcludeCombinations(List<Map<String, ?>> excludes) {
     List<Map<String, String>> result = new ArrayList<>();
     for (Map<String, ?> value : excludes) {
@@ -112,7 +113,7 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
             }
           }
         }
-      } else {
+      } else if (value.values().stream().allMatch(v -> v instanceof String)) {
         combos.add((Map<String, String>) value);
       }
       result.addAll(combos);
