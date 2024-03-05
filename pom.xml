@@ -14,7 +14,7 @@
     <url>https://github.com/jenkinsci/yaml-axis-plugin</url>
     <properties>
         <changelist>999999-SNAPSHOT</changelist>
-        <jenkins.version>2.414.3</jenkins.version>
+        <jenkins.version>2.447</jenkins.version>
     </properties>
 
     <scm>
