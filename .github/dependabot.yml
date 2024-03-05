@@ -14,8 +14,6 @@ updates:
       timezone: "Asia/Tokyo"
     ignore:
       - dependency-name: "org.jenkins-ci.main.jenkins-core"
-    exclude-patterns:
-      - "jenkins-core"
     assignees:
       - "sue445"
 
