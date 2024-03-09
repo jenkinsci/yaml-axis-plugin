@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.jenkins-ci.main</groupId>
             <artifactId>jenkins-test-harness</artifactId>
-            <version>2165.vf0266a_2d187f</version>
+            <version>2171.v048c97409d12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
