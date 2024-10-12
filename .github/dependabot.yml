@@ -17,6 +17,7 @@ updates:
 
       # Keep jenkins-core 2.414.3
       - dependency-name: "org.jenkins-ci.plugins:matrix-project"
+      - dependency-name: "org.jenkins-ci.plugins:plugin"
     assignees:
       - "sue445"
 
