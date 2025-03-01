@@ -19,6 +19,7 @@ updates:
       - dependency-name: "org.jenkins-ci.plugins:matrix-project"
       - dependency-name: "org.jenkins-ci.plugins:plugin"
       - dependency-name: "org.jenkins-ci.main:jenkins-test-harness"
+      - dependency-name: "org.jenkins-ci.plugins:structs"
     assignees:
       - "sue445"
 
