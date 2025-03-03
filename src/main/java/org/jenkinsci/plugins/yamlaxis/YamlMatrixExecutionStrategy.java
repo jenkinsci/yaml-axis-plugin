@@ -46,9 +46,9 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
     List<Combination> combinations = MatrixUtils.reject(comb, excludeCombinations);
     BuildUtils.log(execution, "excludes=" + excludeCombinations);
     return new HashMap<>() {
-	    {
-		    put("YamlMatrixExecutionStrategy", combinations);
-	    }
+      {
+        put("YamlMatrixExecutionStrategy", combinations);
+      }
     };
   }
 
@@ -96,11 +96,11 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
               }
             } else {
               newCombos.add(
-		              new HashMap<>() {
-			              {
-				              put(entry.getKey(), (String) v);
-			              }
-		              });
+                new HashMap<>() {
+                  {
+                    put(entry.getKey(), (String) v);
+                  }
+                });
             }
           }
           combos = newCombos;
@@ -127,14 +127,14 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
   }
 
   private YamlLoader getYamlLoader(MatrixBuild.MatrixBuildExecution execution) {
-	  return switch (yamlType) {
-		  case YamlFileLoader.RADIO_VALUE -> {
-			  FilePath workspace = execution.getBuild().getModuleRoot();
-			  yield new YamlFileLoader(yamlFile, workspace);
-		  }
-		  case YamlTextLoader.RADIO_VALUE -> new YamlTextLoader(yamlText);
-		  default -> throw new IllegalArgumentException(yamlType + " is unknown");
-	  };
+    return switch (yamlType) {
+      case YamlFileLoader.RADIO_VALUE -> {
+        FilePath workspace = execution.getBuild().getModuleRoot();
+        yield new YamlFileLoader(yamlFile, workspace);
+      }
+      case YamlTextLoader.RADIO_VALUE -> new YamlTextLoader(yamlText);
+      default -> throw new IllegalArgumentException(yamlType + " is unknown");
+    };
   }
 
   @Extension
