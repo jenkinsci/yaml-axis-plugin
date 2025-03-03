@@ -12,7 +12,7 @@ import org.jenkinsci.plugins.yamlaxis.util.BuildUtils;
 import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class YamlAxis extends Axis {
   private List<String> computedValues = null;
@@ -65,7 +65,7 @@ public class YamlAxis extends Axis {
 
     /** Overridden to create a new instance of our Axis extension from UI values. */
     @Override
-    public Axis newInstance(StaplerRequest req, JSONObject formData) {
+    public Axis newInstance(StaplerRequest2 req, JSONObject formData) {
       String name = formData.getString("name");
       String yamlFile = formData.getString("valueString");
       return new YamlAxis(name, yamlFile, null);

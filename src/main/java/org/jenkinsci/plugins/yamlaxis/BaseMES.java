@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.yamlaxis;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import hudson.AbortException;
 import hudson.console.ModelHyperlinkNote;
 import hudson.matrix.*;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 // seems like groovy wants the abstract class too
 // import hudson.tasks.test.AggregatedTestResultAction

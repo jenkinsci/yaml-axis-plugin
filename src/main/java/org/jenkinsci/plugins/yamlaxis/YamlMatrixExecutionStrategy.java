@@ -16,7 +16,7 @@ import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils;
 import org.jenkinsci.plugins.yamlaxis.util.MatrixUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 public class YamlMatrixExecutionStrategy extends BaseMES {
   private String yamlType = YamlFileLoader.RADIO_VALUE;
@@ -145,7 +145,7 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
     }
 
     @Override
-    public YamlMatrixExecutionStrategy newInstance(StaplerRequest req, JSONObject formData) {
+    public YamlMatrixExecutionStrategy newInstance(StaplerRequest2 req, JSONObject formData) {
       String yamlType = formData.getString("yamlType");
       String yamlFile = formData.getString("yamlFile");
       String yamlText = formData.getString("yamlText");
