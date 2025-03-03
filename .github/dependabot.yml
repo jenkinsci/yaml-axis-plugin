@@ -12,14 +12,6 @@ updates:
       day: "saturday"
       time: "05:00"
       timezone: "Asia/Tokyo"
-    ignore:
-      - dependency-name: "org.jenkins-ci.main:jenkins-core"
-
-      # Keep jenkins-core 2.414.3
-      - dependency-name: "org.jenkins-ci.plugins:matrix-project"
-      - dependency-name: "org.jenkins-ci.plugins:plugin"
-      - dependency-name: "org.jenkins-ci.main:jenkins-test-harness"
-      - dependency-name: "org.jenkins-ci.plugins:structs"
     assignees:
       - "sue445"
 
