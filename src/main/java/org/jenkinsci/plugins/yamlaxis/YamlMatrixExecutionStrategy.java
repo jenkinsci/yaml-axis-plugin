@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.yamlaxis;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.matrix.Combination;
@@ -44,10 +45,10 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
     List<Combination> excludeCombinations = loadExcludes(execution);
     List<Combination> combinations = MatrixUtils.reject(comb, excludeCombinations);
     BuildUtils.log(execution, "excludes=" + excludeCombinations);
-    return new HashMap<String, List<Combination>>() {
-      {
-        put("YamlMatrixExecutionStrategy", combinations);
-      }
+    return new HashMap<>() {
+	    {
+		    put("YamlMatrixExecutionStrategy", combinations);
+	    }
     };
   }
 
@@ -95,11 +96,11 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
               }
             } else {
               newCombos.add(
-                  new HashMap<String, String>() {
-                    {
-                      put(entry.getKey(), (String) v);
-                    }
-                  });
+		              new HashMap<>() {
+			              {
+				              put(entry.getKey(), (String) v);
+			              }
+		              });
             }
           }
           combos = newCombos;
@@ -126,26 +127,26 @@ public class YamlMatrixExecutionStrategy extends BaseMES {
   }
 
   private YamlLoader getYamlLoader(MatrixBuild.MatrixBuildExecution execution) {
-    switch (yamlType) {
-      case YamlFileLoader.RADIO_VALUE:
-        FilePath workspace = execution.getBuild().getModuleRoot();
-        return new YamlFileLoader(yamlFile, workspace);
-      case YamlTextLoader.RADIO_VALUE:
-        return new YamlTextLoader(yamlText);
-      default:
-        throw new IllegalArgumentException(yamlType + " is unknown");
-    }
+	  return switch (yamlType) {
+		  case YamlFileLoader.RADIO_VALUE -> {
+			  FilePath workspace = execution.getBuild().getModuleRoot();
+			  yield new YamlFileLoader(yamlFile, workspace);
+		  }
+		  case YamlTextLoader.RADIO_VALUE -> new YamlTextLoader(yamlText);
+		  default -> throw new IllegalArgumentException(yamlType + " is unknown");
+	  };
   }
 
   @Extension
   public static class DescriptorImpl extends MatrixExecutionStrategyDescriptor {
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Yaml matrix execution strategy";
     }
 
     @Override
-    public YamlMatrixExecutionStrategy newInstance(StaplerRequest2 req, JSONObject formData) {
+    public YamlMatrixExecutionStrategy newInstance(StaplerRequest2 req, @NonNull JSONObject formData) {
       String yamlType = formData.getString("yamlType");
       String yamlFile = formData.getString("yamlFile");
       String yamlText = formData.getString("yamlText");

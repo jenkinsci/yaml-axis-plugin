@@ -65,7 +65,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
     return r;
   }
 
-  // override this and return a list of list of combinations
+  // override this and return a map of lists of combinations
   // and the builds will be run each inner list in parallel then do the next list
   // and if anything fails it stops
   abstract Map<String, List<Combination>> decideOrder(
@@ -82,7 +82,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
   }
 
   MatrixRun waitForCompletion(MatrixBuildExecution exec, MatrixConfiguration c)
-      throws InterruptedException, IOException {
+      throws InterruptedException {
     BuildListener listener = exec.getListener();
     String whyInQueue = "";
     long startTime = System.currentTimeMillis();

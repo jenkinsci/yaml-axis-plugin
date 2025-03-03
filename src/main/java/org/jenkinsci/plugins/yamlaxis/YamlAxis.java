@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.yamlaxis;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.matrix.Axis;
@@ -7,6 +8,8 @@ import hudson.matrix.AxisDescriptor;
 import hudson.matrix.MatrixBuild;
 import hudson.util.FormValidation;
 import java.util.List;
+import java.util.Objects;
+
 import net.sf.json.JSONObject;
 import org.jenkinsci.plugins.yamlaxis.util.BuildUtils;
 import org.jenkinsci.plugins.yamlaxis.util.DescriptorUtils;
@@ -15,7 +18,7 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest2;
 
 public class YamlAxis extends Axis {
-  private List<String> computedValues = null;
+  private List<String> computedValues;
 
   @DataBoundConstructor
   public YamlAxis(String name, String valueString, List<String> computedValues) {
@@ -58,6 +61,7 @@ public class YamlAxis extends Axis {
   /** Descriptor for this plugin. */
   @Extension
   public static class DescriptorImpl extends AxisDescriptor {
+    @NonNull
     @Override
     public String getDisplayName() {
       return "Yaml Axis";
@@ -65,7 +69,7 @@ public class YamlAxis extends Axis {
 
     /** Overridden to create a new instance of our Axis extension from UI values. */
     @Override
-    public Axis newInstance(StaplerRequest2 req, JSONObject formData) {
+    public Axis newInstance(StaplerRequest2 req, @NonNull JSONObject formData) {
       String name = formData.getString("name");
       String yamlFile = formData.getString("valueString");
       return new YamlAxis(name, yamlFile, null);
@@ -79,11 +83,8 @@ public class YamlAxis extends Axis {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof YamlAxis)) return false;
-    YamlAxis yamlAxis = (YamlAxis) o;
-    return computedValues != null
-        ? computedValues.equals(yamlAxis.computedValues)
-        : yamlAxis.computedValues == null;
+    if (!(o instanceof YamlAxis yamlAxis)) return false;
+    return Objects.equals(computedValues, yamlAxis.computedValues);
   }
 
   @Override
