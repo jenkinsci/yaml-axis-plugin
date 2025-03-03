@@ -1,5 +1,6 @@
 package org.jenkinsci.plugins.yamlaxis;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import hudson.AbortException;
 import hudson.console.ModelHyperlinkNote;
 import hudson.matrix.*;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 // seems like groovy wants the abstract class too
 // import hudson.tasks.test.AggregatedTestResultAction
@@ -65,7 +65,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
     return r;
   }
 
-  // override this and return a list of list of combinations
+  // override this and return a map of lists of combinations
   // and the builds will be run each inner list in parallel then do the next list
   // and if anything fails it stops
   abstract Map<String, List<Combination>> decideOrder(
@@ -82,7 +82,7 @@ abstract class BaseMES extends MatrixExecutionStrategy {
   }
 
   MatrixRun waitForCompletion(MatrixBuildExecution exec, MatrixConfiguration c)
-      throws InterruptedException, IOException {
+      throws InterruptedException {
     BuildListener listener = exec.getListener();
     String whyInQueue = "";
     long startTime = System.currentTimeMillis();
