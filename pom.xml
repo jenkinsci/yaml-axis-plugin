@@ -179,7 +179,7 @@
                 <configuration>
                     <xmlOutput>false</xmlOutput>
                     <failOnError>false</failOnError>
-                    <excludeFilterFile>exclude.xml</excludeFilterFile>
+                    <excludeFilterFile>${basedir}/exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
         </plugins>
