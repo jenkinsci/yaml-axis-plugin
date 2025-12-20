@@ -61,7 +61,7 @@ class YamlMatrixExecutionStrategyTest {
 
       build.getRuns().forEach(run -> {
         try {
-          String runLog = JenkinsRule.getLog(build);
+          String runLog = JenkinsRule.getLog(run);
           assertThat(runLog).contains("SUCCESS");
         } catch (Exception e) {
           throw new RuntimeException(e);
