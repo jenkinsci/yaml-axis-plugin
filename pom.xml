@@ -103,19 +103,6 @@
                 <version>3.5.4</version>
                 <configuration>
                     <useFile>false</useFile>
-                    <excludes>
-                        <!--
-                        FIXME: workaround for following error
-                        [INFO] Running org.jenkins_ci.plugins.yaml_axis.InjectedTest
-                        [ERROR] Tests run: 6, Failures: 0, Errors: 1, Skipped: 1, Time elapsed: 3.102 s <<< FAILURE! - in org.jenkins_ci.plugins.yaml_axis.InjectedTest
-                        [ERROR] org.jenkins_ci.plugins.yaml_axis.InjectedTest.testParseJelly(URL)[3] - Time elapsed: 0.671 s <<< ERROR!
-                        org.htmlunit.FailingHttpStatusCodeException: 500 Server Error for http://localhost:50450/jenkins/closures/?uuid=3365435e-33b0-42ec-ab8f-398c854f1a32
-                                at org.htmlunit.WebClient.throwFailingHttpStatusCodeExceptionIfNecessary(WebClient.java:762)
-                                at org.htmlunit.WebClient.getPage(WebClient.java:514)
-                                at org.htmlunit.WebClient.getPage(WebClient.java:413)
-                        -->
-                        <exclude>**/InjectedTest.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
