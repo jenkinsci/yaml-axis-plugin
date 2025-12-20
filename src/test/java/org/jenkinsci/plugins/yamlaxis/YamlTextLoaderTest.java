@@ -58,9 +58,9 @@ class YamlTextLoaderTest {
   }
 
   @Nested
-  @DisplayName("LoadValuesTest")
+  @DisplayName("LoadMapsTest")
   @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-  class LoadValuesTest {
+  class LoadMapsTest {
     private YamlTextLoader loader;
 
     @BeforeEach
