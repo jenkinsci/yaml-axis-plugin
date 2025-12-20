@@ -56,12 +56,12 @@ class YamlMatrixExecutionStrategyTest {
 
       var build = matrixProject.scheduleBuild2(0).get();
 
-      String logText = Files.readString(build.getLogFile().toPath());
+      String logText = JenkinsRule.getLog(build);
       assertThat(logText).contains("SUCCESS");
 
       build.getRuns().forEach(run -> {
         try {
-          String runLog = Files.readString(run.getLogFile().toPath());
+          String runLog = JenkinsRule.getLog(build);
           assertThat(runLog).contains("SUCCESS");
         } catch (Exception e) {
           throw new RuntimeException(e);
