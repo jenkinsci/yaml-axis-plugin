@@ -75,12 +75,12 @@ class YamlTextLoaderTest {
     }
 
     @ParameterizedTest(name = "[{index}] key={0}")
-    @MethodSource("provideLoadValuesData")
-    void testLoadValues(String key, List<Map<String, String>> expected) {
+    @MethodSource("provideLoadMapsData")
+    void testLoadMaps(String key, List<Map<String, String>> expected) {
       assertEquals(expected, loader.loadMaps(key));
     }
 
-    Stream<Arguments> provideLoadValuesData() {
+    Stream<Arguments> provideLoadMapsData() {
       return Stream.of(
         arguments("exclude", List.of(
           Map.of("a", "1", "b", "2"),
