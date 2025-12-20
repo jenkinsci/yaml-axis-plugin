@@ -52,8 +52,7 @@ class YamlTextLoaderTest {
         arguments("STRING_VALUE", List.of("a", "b", "c")),
         arguments("INT_VALUE",    List.of("1", "2", "3")),
         arguments("BOOL_VALUE",   List.of("true", "false")),
-        arguments("UNKNOWN",      List.of()),
-        arguments("STRING_VALUE", List.of("a", "b", "c"))
+        arguments("UNKNOWN",      List.of())
       );
     }
   }
