@@ -75,7 +75,7 @@ class YamlTextLoaderTest {
       loader = new YamlTextLoader(yamlText);
     }
 
-    @ParameterizedTest(name = "[index] key={0}")
+    @ParameterizedTest(name = "[{index}] key={0}")
     @MethodSource("provideLoadValuesData")
     void testLoadValues(String key, List<Map<String, String>> expected) {
       assertEquals(expected, loader.loadMaps(key));
