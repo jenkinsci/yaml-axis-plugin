@@ -1,7 +1,7 @@
 package org.jenkinsci.plugins.yamlaxis.util;
 
 import hudson.util.FormValidation;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class DescriptorUtils {
 
